@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotel Rural Castúo · Reserva y gestión</title>
+  <meta name="description" content="Landing page y panel de gestión de reservas en un solo archivo HTML listo para GitHub." />
+  <style>
+    :root {
+      --verde: #333f28;
+      --verde-osc: #232b1a;
+      --terracota: #a3603c;
+      --dorado: #bd9758;
+      --crema: #f6f1e6;
+      --crema-osc: #ece2cd;
+      --texto: #3b352c;
+      --muted: #6b6353;
+      --borde: rgba(35,30,22,.14);
+      --sombra: 0 20px 45px -20px rgba(32,27,22,.35);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--crema);
+      color: var(--texto);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 22px; border-radius: 999px; border: 1px solid var(--verde);
+      font-weight: 600; cursor: pointer; transition: .25s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--terracota); color: white; border-color: var(--terracota); }
+    .btn-secondary { background: transparent; color: var(--verde); }
+    .btn-ghost { background: white; color: var(--verde); }
+    .topbar {
+      position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between;
+      align-items: center; padding: 18px 24px; background: rgba(246,241,230,.92);
+      backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .brand { font-weight: 800; color: var(--verde); letter-spacing: .06em; text-transform: uppercase; }
+    .nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    .nav a { color: var(--verde); font-weight: 600; }
+    .hero {
+      padding: 70px 0 40px; background: linear-gradient(120deg, rgba(0,0,0,.18), rgba(0,0,0,.38)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1800&q=80') center/cover;
+      color: white; min-height: 82vh; display: flex; align-items: center;
+    }
+    .hero-card {
+      background: rgba(0,0,0,.35); padding: 36px; border-radius: 24px; max-width: 780px;
+      box-shadow: var(--sombra); backdrop-filter: blur(4px);
+    }
+    .hero h1 { font-size: clamp(2.1rem, 4vw, 3.4rem); margin: 0 0 14px; color: white; }
+    .hero p { font-size: 1.06rem; color: rgba(255,255,255,.92); margin: 0 0 20px; }
+    .section { padding: 78px 0; }
+    .section.alt { background: var(--crema-osc); }
+    .section-title { font-size: clamp(1.7rem, 2.4vw, 2.2rem); margin-bottom: 24px; color: var(--verde-osc); }
+    .grid { display: grid; gap: 22px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: white; border: 1px solid var(--borde); border-radius: 18px; padding: 24px; box-shadow: var(--sombra); }
+    .pill { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(163,96,60,.14); color: var(--terracota); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 16px; }
+    .stat { background: linear-gradient(135deg, var(--crema-osc), white); border: 1px solid var(--borde); border-radius: 16px; padding: 16px; }
+    .stat strong { display: block; font-size: 1.2rem; margin-top: 4px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; color: var(--verde-osc); }
+    input, select, textarea { padding: 11px 12px; border: 1px solid var(--borde); border-radius: 10px; font: inherit; background: #fcfaf6; color: var(--texto); }
+    textarea { min-height: 100px; resize: vertical; }
+    .full { grid-column: 1 / -1; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .reservation-list { display: grid; gap: 14px; }
+    .reservation-card { border: 1px solid var(--borde); border-radius: 18px; padding: 18px; background: white; box-shadow: var(--sombra); }
+    .reservation-head { display: flex; justify-content: space-between; align-items: start; gap: 12px; flex-wrap: wrap; }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; color: white; font-size: .8rem; font-weight: 700; background: var(--terracota); }
+    .muted { color: var(--muted); }
+    .modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; padding: 24px; z-index: 200; }
+    .modal.open { display: flex; }
+    .modal-card { width: min(760px, 100%); background: white; border-radius: 20px; padding: 24px; box-shadow: var(--sombra); max-height: 90vh; overflow: auto; }
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .small { font-size: .92rem; }
+    @media (max-width: 860px) {
+      .grid-2, .grid-3, .form-grid, .grid-2 .card, .stats { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding: 90px 0 56px; }
+      .topbar { flex-direction: column; align-items: start; gap: 10px; }
+      .nav { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio">Hotel Rural Castúo</a>
+    <nav class="nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#habitaciones">Habitaciones</a>
+      <a href="#reservar">Reservar</a>
+      <a href="#gestor">Gestor</a>
+    </nav>
+  </header>
+
+  <section id="inicio" class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="pill">Pinofranqueado · Las Hurdes</div>
+        <h1>Un refugio de piedra, castaño y calma en el corazón de la naturaleza.</h1>
+        <p>Disfruta de una estancia tranquila, gastronomía local y vistas sobre el valle con un alojamiento pensado para desconectar y vivir el entorno de Las Hurdes con autenticidad.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#reservar">Reservar ahora</a>
+          <a class="btn btn-secondary" href="#gestor">Ver gestor</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid grid-2">
+      <div class="card">
+        <div class="pill">Bienvenidos</div>
+        <h2 class="section-title">Una experiencia rural cuidada en cada detalle</h2>
+        <p>Castúo combina arquitectura tradicional, espacios acogedores y un entorno natural privilegiado para quienes buscan tranquilidad, gastronomía y rutas por la región.</p>
+        <p>Desde las habitaciones con encanto hasta las terrazas, cada rincón está pensado para que te sientas en casa.</p>
+      </div>
+      <div class="card">
+        <div class="pill">Destacados</div>
+        <ul class="muted">
+          <li>Habitaciones con vistas al valle</li>
+          <li>Desayuno local y cocina de temporada</li>
+          <li>Rutas, senderismo y naturaleza</li>
+          <li>Atención personalizada para escapadas y fines de semana</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="habitaciones" class="section alt">
+    <div class="container">
+      <h2 class="section-title">Habitaciones y estancias</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="pill">Suite</div>
+          <h3>Habitación de piedra</h3>
+          <p>Espacio amplio con terraza, baño con ducha de piedra y una atmósfera íntima para escapadas románticas.</p>
+        </div>
+        <div class="card">
+          <div class="pill">Familiar</div>
+          <h3>Habitación de familia</h3>
+          <p>Ideal para grupos o estancias largas, con capacidad para adultos y niños y un ambiente muy acogedor.</p>
+        </div>
+        <div class="card">
+          <div class="pill">Estándar</div>
+          <h3>Estancia clásica</h3>
+          <p>Una opción sencilla, acogedora y funcional para quienes buscan disfrutar del entorno sin renunciar al confort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reservar" class="section">
+    <div class="container grid grid-2">
+      <div class="card">
+        <div class="pill">Reserva</div>
+        <h2 class="section-title">Solicita tu estancia</h2>
+        <p>Cuéntanos tus fechas, quién viene y qué tipo de estancia prefieres. En breve te responderemos con disponibilidad.</p>
+        <form id="formReserva">
+          <div class="form-grid">
+            <label>Nombre<input id="nombre" required /></label>
+            <label>Email<input id="email" type="email" required /></label>
+            <label>Teléfono<input id="telefono" /></label>
+            <label>Estado<select id="estado"><option value="Nueva">Nueva</option><option value="Confirmada">Confirmada</option><option value="Cancelada">Cancelada</option></select></label>
+            <label>Fecha<input id="fecha" type="date" required /></label>
+            <label>Personas<input id="personas" type="number" min="1" value="2" /></label>
+            <label>Adultos<input id="adultos" type="number" min="1" value="2" /></label>
+            <label>Niños<input id="ninos" type="number" min="0" value="0" /></label>
+            <label>Tipo de estancia<select id="tipo_estancia"><option>Estándar</option><option>Suite</option><option>Familiar</option><option>Romántica</option></select></label>
+            <label class="full">Mensaje<textarea id="mensaje"></textarea></label>
+            <label class="full">Observaciones<textarea id="notas"></textarea></label>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Enviar reserva</button>
+            <button class="btn btn-secondary" type="reset">Limpiar</button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="pill">Información útil</div>
+        <h3>Tu reserva queda guardada en esta misma página</h3>
+        <p>Esta versión está preparada para GitHub Pages. Al enviarla, la reserva se guarda en el navegador y aparece en el gestor integrado de la misma página.</p>
+        <p>Si abres la misma página en otro momento, tus datos seguirán disponibles mientras el navegador no borre los datos almacenados.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gestor" class="section alt">
+    <div class="container">
+      <div class="pill">Panel de gestión</div>
+      <h2 class="section-title">Gestor operativo de reservas</h2>
+      <div class="stats">
+        <div class="stat"><span class="pill">Reservas</span><strong id="totalReservas">0</strong></div>
+        <div class="stat"><span class="pill">Pendientes</span><strong id="pendientes">0</strong></div>
+        <div class="stat"><span class="pill">Confirmadas</span><strong id="confirmadas">0</strong></div>
+      </div>
+      <div id="estado" class="muted">Cargando reservas…</div>
+      <div id="reservasGrid" class="reservation-list" style="margin-top: 16px;"></div>
+    </div>
+  </section>
+
+  <div id="modalFicha" class="modal">
+    <div class="modal-card">
+      <h3>Editar reserva</h3>
+      <form id="formFicha">
+        <input type="hidden" id="reservaId" />
+        <div class="form-grid">
+          <label>Nombre<input id="fNombre" /></label>
+          <label>Email<input id="fEmail" type="email" /></label>
+          <label>Teléfono<input id="fTelefono" /></label>
+          <label>Estado<select id="fEstado"><option value="Nueva">Nueva</option><option value="Confirmada">Confirmada</option><option value="Cancelada">Cancelada</option></select></label>
+          <label>Fecha<input id="fFecha" type="date" /></label>
+          <label>Personas<input id="fPersonas" type="number" min="1" /></label>
+          <label>Adultos<input id="fAdultos" type="number" min="1" /></label>
+          <label>Niños<input id="fNinos" type="number" min="0" /></label>
+          <label>Tipo de estancia<select id="fTipo"><option>Estándar</option><option>Suite</option><option>Familiar</option><option>Romántica</option></select></label>
+          <label class="full">Mensaje<textarea id="fMensaje"></textarea></label>
+          <label class="full">Observaciones<textarea id="fNotas"></textarea></label>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="submit">Guardar cambios</button>
+          <button class="btn btn-secondary" id="btnEliminarModal" type="button">Eliminar</button>
+          <button class="btn btn-ghost" id="btnCerrarModal" type="button">Cerrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'castuo_reservas_v1';
+    let reservasActuales = [];
+
+    function loadReservas() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        reservasActuales = Array.isArray(data) ? data : [];
+      } catch {
+        reservasActuales = [];
+      }
+    }
+
+    function saveReservas() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reservasActuales));
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatDate(value) {
+      if (!value) return '—';
+      return value;
+    }
+
+    function renderReservas() {
+      const grid = document.getElementById('reservasGrid');
+      const estado = document.getElementById('estado');
+      const total = document.getElementById('totalReservas');
+      const pendientes = document.getElementById('pendientes');
+      const confirmadas = document.getElementById('confirmadas');
+
+      total.textContent = reservasActuales.length;
+      pendientes.textContent = reservasActuales.filter(r => (r.estado || 'Nueva') === 'Nueva').length;
+      confirmadas.textContent = reservasActuales.filter(r => (r.estado || 'Nueva') === 'Confirmada').length;
+
+      if (!reservasActuales.length) {
+        estado.innerHTML = '<div class="card">No hay reservas todavía.</div>';
+        grid.innerHTML = '';
+        return;
+      }
+
+      estado.innerHTML = '';
+      grid.innerHTML = reservasActuales.map(r => `
+        <article class="reservation-card">
+          <div class="reservation-head">
+            <div>
+              <h3>${escapeHtml(r.nombre || 'Sin nombre')}</h3>
+              <p class="muted">${escapeHtml(r.email || 'Sin email')} · ${escapeHtml(r.telefono || '—')}</p>
+            </div>
+            <span class="badge">${escapeHtml(r.estado || 'Nueva')}</span>
+          </div>
+          <p class="small"><strong>Fecha:</strong> ${escapeHtml(formatDate(r.fecha))} · <strong>Personas:</strong> ${escapeHtml(r.personas || 1)} · <strong>Adultos:</strong> ${escapeHtml(r.adultos || 2)} · <strong>Niños:</strong> ${escapeHtml(r.ninos || 0)}</p>
+          <p class="small"><strong>Tipo:</strong> ${escapeHtml(r.tipo_estancia || 'Estándar')}</p>
+          <p class="small"><strong>Mensaje:</strong> ${escapeHtml(r.mensaje || '—')}</p>
+          <p class="small"><strong>Observaciones:</strong> ${escapeHtml(r.notas || 'Sin observaciones')}</p>
+          <div class="actions">
+            <button class="btn btn-ghost" data-id="${r.id}" data-action="ficha">Ficha</button>
+            <button class="btn btn-primary" data-id="${r.id}" data-action="confirm">Confirmar</button>
+            <button class="btn btn-secondary" data-id="${r.id}" data-action="cancel">Cancelar</button>
+            <button class="btn btn-secondary" data-id="${r.id}" data-action="delete">Eliminar</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function abrirFicha(reserva) {
+      document.getElementById('reservaId').value = reserva.id;
+      document.getElementById('fNombre').value = reserva.nombre || '';
+      document.getElementById('fEmail').value = reserva.email || '';
+      document.getElementById('fTelefono').value = reserva.telefono || '';
+      document.getElementById('fEstado').value = reserva.estado || 'Nueva';
+      document.getElementById('fFecha').value = reserva.fecha || '';
+      document.getElementById('fPersonas').value = reserva.personas || 1;
+      document.getElementById('fAdultos').value = reserva.adultos || 2;
+      document.getElementById('fNinos').value = reserva.ninos || 0;
+      document.getElementById('fTipo').value = reserva.tipo_estancia || 'Estándar';
+      document.getElementById('fMensaje').value = reserva.mensaje || '';
+      document.getElementById('fNotas').value = reserva.notas || '';
+      document.getElementById('modalFicha').classList.add('open');
+    }
+
+    function cerrarFicha() {
+      document.getElementById('modalFicha').classList.remove('open');
+    }
+
+    function addReserva(data) {
+      const reserva = { id: Date.now(), creado_en: new Date().toLocaleString('es-ES'), ...data };
+      reservasActuales.unshift(reserva);
+      saveReservas();
+      renderReservas();
+    }
+
+    function updateReserva(id, data) {
+      reservasActuales = reservasActuales.map(r => r.id === id ? { ...r, ...data } : r);
+      saveReservas();
+      renderReservas();
+    }
+
+    function deleteReserva(id) {
+      reservasActuales = reservasActuales.filter(r => r.id !== id);
+      saveReservas();
+      renderReservas();
+    }
+
+    document.getElementById('formReserva').addEventListener('submit', function (e) {
+      e.preventDefault();
+      addReserva({
+        nombre: document.getElementById('nombre').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        telefono: document.getElementById('telefono').value.trim(),
+        estado: document.getElementById('estado').value,
+        fecha: document.getElementById('fecha').value,
+        personas: Number(document.getElementById('personas').value || 1),
+        adultos: Number(document.getElementById('adultos').value || 2),
+        ninos: Number(document.getElementById('ninos').value || 0),
+        tipo_estancia: document.getElementById('tipo_estancia').value,
+        mensaje: document.getElementById('mensaje').value.trim(),
+        notas: document.getElementById('notas').value.trim()
+      });
+      this.reset();
+      document.getElementById('personas').value = '2';
+      document.getElementById('adultos').value = '2';
+      document.getElementById('ninos').value = '0';
+      document.getElementById('estado').value = 'Nueva';
+      document.getElementById('tipo_estancia').value = 'Estándar';
+      alert('Reserva enviada correctamente.');
+    });
+
+    document.addEventListener('click', function (event) {
+      const btn = event.target.closest('button[data-id]');
+      if (!btn) return;
+      const id = Number(btn.dataset.id);
+      const action = btn.dataset.action;
+      if (action === 'ficha') {
+        const reserva = reservasActuales.find(r => r.id === id);
+        if (reserva) abrirFicha(reserva);
+      } else if (action === 'confirm') {
+        updateReserva(id, { estado: 'Confirmada' });
+      } else if (action === 'cancel') {
+        updateReserva(id, { estado: 'Cancelada' });
+      } else if (action === 'delete') {
+        if (confirm('¿Eliminar esta reserva?')) deleteReserva(id);
+      }
+    });
+
+    document.getElementById('formFicha').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const id = Number(document.getElementById('reservaId').value);
+      updateReserva(id, {
+        nombre: document.getElementById('fNombre').value.trim(),
+        email: document.getElementById('fEmail').value.trim(),
+        telefono: document.getElementById('fTelefono').value.trim(),
+        estado: document.getElementById('fEstado').value,
+        fecha: document.getElementById('fFecha').value,
+        personas: Number(document.getElementById('fPersonas').value || 1),
+        adultos: Number(document.getElementById('fAdultos').value || 2),
+        ninos: Number(document.getElementById('fNinos').value || 0),
+        tipo_estancia: document.getElementById('fTipo').value,
+        mensaje: document.getElementById('fMensaje').value.trim(),
+        notas: document.getElementById('fNotas').value.trim()
+      });
+      cerrarFicha();
+    });
+
+    document.getElementById('btnEliminarModal').addEventListener('click', function () {
+      const id = Number(document.getElementById('reservaId').value);
+      if (confirm('¿Eliminar definitivamente esta reserva?')) {
+        deleteReserva(id);
+        cerrarFicha();
+      }
+    });
+
+    document.getElementById('btnCerrarModal').addEventListener('click', cerrarFicha);
+    document.getElementById('modalFicha').addEventListener('click', function (e) {
+      if (e.target.id === 'modalFicha') cerrarFicha();
+    });
+
+    loadReservas();
+    renderReservas();
+  </script>
+</body>
+</html>
