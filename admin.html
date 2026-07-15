@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Control - Hotel Castúo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; background: #f4f4f9; }
+        table { width: 100%; background: white; border-collapse: collapse; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Reservas Recibidas</h1>
+    <button onclick="logout()">Cerrar Sesión</button>
+    <table id="tablaReservas">
+        <thead>
+            <tr><th>Nombre</th><th>Email</th><th>Fecha</th></tr>
+        </thead>
+        <tbody id="contenidoTabla"></tbody>
+    </table>
+
+    <script>
+        const supabase = supabase.createClient('TU_SUPABASE_URL', 'TU_SUPABASE_ANON_KEY');
+
+        async function verificarSesion() {
+            const { data } = await supabase.auth.getSession();
+            if (!data.session) window.location.href = 'login.html';
+            else cargarReservas();
+        }
+
+        async function cargarReservas() {
+            const { data } = await supabase.from('reservas').select('*');
+            const tbody = document.getElementById('contenidoTabla');
+            tbody.innerHTML = data.map(r => `<tr><td>${r.nombre}</td><td>${r.email}</td><td>${r.fecha}</td></tr>`).join('');
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            window.location.href = 'login.html';
+        }
+
+        verificarSesion();
+    </script>
+</body>
+</html>
