@@ -3,53 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Castúo</title>
+    <title>Panel Admin - Hotel Castúo</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body class="bg-stone-100">
-    <div class="max-w-6xl mx-auto p-6">
-        <div class="flex justify-between items-center mb-10">
-            <h1 class="text-4xl font-bold">Panel de Reservas</h1>
-            <a href="index.html" class="text-amber-700 hover:underline">← Volver a la web</a>
+    <div class="max-w-7xl mx-auto p-6">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-4xl font-bold text-stone-800">Panel de Control</h1>
+                <p class="text-stone-500">Hotel Rural Castúo</p>
+            </div>
+            <a href="index.html" class="text-amber-700 hover:underline flex items-center gap-2">
+                <i class="fas fa-home"></i> Volver a la web
+            </a>
         </div>
 
-        <div id="reservasContainer" class="space-y-6">
-            <!-- Las reservas aparecerán aquí -->
+        <div class="bg-white rounded-3xl shadow p-6">
+            <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+                <i class="fas fa-list"></i> Reservas Recibidas
+            </h2>
+            
+            <div id="tablaReservas" class="overflow-x-auto">
+                <!-- Las reservas se cargan aquí automáticamente -->
+            </div>
         </div>
     </div>
 
     <script>
-        // Cargar reservas guardadas
-        function cargarReservas() {
-            const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
-            const container = document.getElementById('reservasContainer');
-            container.innerHTML = '';
+        const supabase = supabase.createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
+        );
 
-            if (reservas.length === 0) {
-                container.innerHTML = `<p class="text-center text-stone-500 py-12">No hay reservas todavía.</p>`;
+        async function cargarReservas() {
+            const { data, error } = await supabase
+                .from('reservas')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            const container = document.getElementById('tablaReservas');
+            
+            if (error || !data || data.length === 0) {
+                container.innerHTML = `<p class="text-center py-12 text-stone-500">Todavía no hay reservas.</p>`;
                 return;
             }
 
-            reservas.forEach((r, index) => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-8 rounded-3xl shadow";
-                card.innerHTML = `
-                    <div class="flex justify-between">
-                        <div>
-                            <h3 class="font-semibold text-xl">${r.nombre}</h3>
-                            <p class="text-stone-500">${r.email} • ${r.telefono}</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-amber-700 font-medium">${r.checkin} → ${r.checkout}</p>
-                            <p class="text-sm">${r.adultos} adultos ${r.ninos ? `· ${r.ninos} niños` : ''}</p>
-                        </div>
-                    </div>
-                    <p class="mt-4 text-stone-600">${r.comentario || 'Sin comentarios'}</p>
+            let html = `
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="text-left py-4">Cliente</th>
+                            <th class="text-left py-4">Fechas</th>
+                            <th class="text-left py-4">Personas</th>
+                            <th class="text-left py-4">Estado</th>
+                            <th class="text-center py-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach(r => {
+                html += `
+                    <tr class="border-b hover:bg-stone-50">
+                        <td class="py-5">
+                            <div class="font-medium">${r.nombre}</div>
+                            <div class="text-sm text-stone-500">${r.email}</div>
+                        </td>
+                        <td class="py-5">
+                            <div>${r.checkin} → ${r.checkout}</div>
+                        </td>
+                        <td class="py-5">
+                            ${r.adultos} adultos ${r.ninos ? `· ${r.ninos} niños` : ''}
+                        </td>
+                        <td class="py-5">
+                            <span class="px-4 py-1 rounded-full text-sm ${r.estado === 'Confirmada' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+                                ${r.estado || 'Pendiente'}
+                            </span>
+                        </td>
+                        <td class="py-5 text-center">
+                            <button onclick="cambiarEstado('${r.id}')" class="text-amber-700 hover:underline text-sm">
+                                Cambiar Estado
+                            </button>
+                        </td>
+                    </tr>
                 `;
-                container.appendChild(card);
             });
+
+            html += `</tbody></table>`;
+            container.innerHTML = html;
         }
 
+        // Cargar al abrir la página
         cargarReservas();
     </script>
 </body>
