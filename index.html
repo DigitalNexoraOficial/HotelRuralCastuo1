@@ -292,8 +292,228 @@
     font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.04em; color:rgba(251,249,243,.45);
   }
   @media (max-width:760px){ .footer__grid{grid-template-columns:1fr; gap:34px;} }
+/* =====================================================
+   MODAL RESERVA PREMIUM
+===================================================== */
+
+.modal-overlay{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(5px);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+opacity:0;
+visibility:hidden;
+transition:.35s;
+z-index:9999;
+}
+
+.modal-overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+.modal{
+width:100%;
+max-width:700px;
+background:var(--crema-suave);
+border-radius:18px;
+padding:35px;
+box-shadow:0 30px 70px rgba(0,0,0,.35);
+position:relative;
+transform:translateY(40px);
+transition:.35s;
+max-height:90vh;
+overflow:auto;
+}
+
+.modal-overlay.active .modal{
+transform:translateY(0);
+}
+
+.modal-close{
+position:absolute;
+right:20px;
+top:20px;
+width:40px;
+height:40px;
+border:none;
+border-radius:50%;
+background:var(--piedra);
+cursor:pointer;
+font-size:22px;
+transition:.3s;
+}
+
+.modal-close:hover{
+background:var(--cobre);
+color:white;
+}
+
+.modal h2{
+margin-bottom:10px;
+}
+
+.modal p{
+margin-bottom:25px;
+color:var(--tinta-suave);
+}
+
+.modal .form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+}
+
+.modal .field.full{
+grid-column:1/-1;
+}
+
+.modal input,
+.modal select,
+.modal textarea{
+
+width:100%;
+padding:14px;
+border-radius:8px;
+border:1px solid var(--borde);
+background:var(--piedra);
+font-family:inherit;
+font-size:15px;
+
+}
+
+.modal textarea{
+min-height:110px;
+resize:vertical;
+}
+
+.modal button[type=submit]{
+
+margin-top:20px;
+width:100%;
+
+}
+
+@media(max-width:700px){
+
+.modal{
+
+padding:25px;
+
+}
+
+.modal .form-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
 </style>
 </head>
+<!-- ===== MODAL DE RESERVA ===== -->
+<div class="modal-overlay" id="modalReserva">
+
+  <div class="modal">
+
+    <button class="modal-close" id="cerrarModal">&times;</button>
+
+    <h2>Reservar estancia</h2>
+
+    <p>
+      Completa el siguiente formulario y nos pondremos en contacto contigo
+      lo antes posible para confirmar la disponibilidad.
+    </p>
+
+    <form id="formReserva">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" name="nombre" required>
+        </div>
+
+        <div class="field">
+          <label>Apellidos</label>
+          <input type="text" name="apellidos" required>
+        </div>
+
+        <div class="field">
+          <label>Correo electrónico</label>
+          <input type="email" name="email" required>
+        </div>
+
+        <div class="field">
+          <label>Teléfono</label>
+          <input type="tel" name="telefono" required>
+        </div>
+
+        <div class="field">
+          <label>Entrada</label>
+          <input type="date" name="entrada" required>
+        </div>
+
+        <div class="field">
+          <label>Salida</label>
+          <input type="date" name="salida" required>
+        </div>
+
+        <div class="field">
+          <label>Adultos</label>
+          <input type="number" name="adultos" min="1" value="2">
+        </div>
+
+        <div class="field">
+          <label>Niños</label>
+          <input type="number" name="ninos" min="0" value="0">
+        </div>
+
+        <div class="field full">
+          <label>Habitación</label>
+
+          <select name="habitacion">
+
+            <option>Habitación Pizarra</option>
+
+            <option>Habitación Castañar</option>
+
+            <option>Suite Chorro</option>
+
+          </select>
+
+        </div>
+
+        <div class="field full">
+          <label>Peticiones especiales</label>
+
+          <textarea
+            name="mensaje"
+            placeholder="Cuéntanos cualquier necesidad especial..."
+          ></textarea>
+
+        </div>
+
+      </div>
+
+      <button class="btn btn-cobre" type="submit">
+
+        Solicitar reserva
+
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
 <body>
 
 <header class="nav" id="nav">
