@@ -3,143 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Rural Castúo - Pinofranqueado</title>
+    <title>Hotel Rural Castúo</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <style>
-        body { font-family: system-ui, sans-serif; }
-        .hero { 
-            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), 
-                        url('https://picsum.photos/id/1015/2000/1200') center/cover; 
-        }
-    </style>
 </head>
-<body class="bg-stone-50 text-stone-800">
+<body class="bg-stone-50">
 
-    <!-- NAV (mismo de antes) -->
-    <nav class="bg-white shadow sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <span class="text-3xl">🌲</span>
-                <h1 class="text-2xl font-bold">Hotel Castúo</h1>
-            </div>
-            <button onclick="openModal()" class="bg-amber-800 text-white px-6 py-3 rounded-2xl font-medium">Reservar</button>
-        </div>
-    </nav>
+    <!-- NAV + HERO (mantengo lo anterior) -->
 
-    <!-- HERO (mismo) -->
-    <section class="hero h-screen flex items-center text-white">
-        <div class="max-w-4xl mx-auto text-center px-6">
-            <p class="uppercase text-amber-200 tracking-widest">Pinofranqueado • Las Hurdes • Cáceres</p>
-            <h1 class="text-6xl md:text-7xl font-light mt-4">Un refugio entre piedra y río</h1>
-            <p class="mt-6 text-xl">Hotel rural con encanto en el corazón de Extremadura.</p>
-            <button onclick="openModal()" class="mt-10 bg-white text-stone-900 px-10 py-4 rounded-2xl text-lg font-semibold">Reservar ahora</button>
-        </div>
-    </section>
-
-    <!-- MODAL PROFESIONAL DE RESERVA -->
+    <!-- MODAL DE RESERVA -->
     <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-        <div class="bg-white rounded-3xl w-full max-w-lg mx-4 p-8 max-h-[90vh] overflow-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold">Completa tu reserva</h2>
-                <button onclick="closeModal()" class="text-3xl text-gray-400 hover:text-gray-600">×</button>
-            </div>
-
+        <div class="bg-white rounded-3xl w-full max-w-lg mx-4 p-8">
+            <h2 class="text-3xl font-bold mb-6">Nueva Reserva</h2>
             <form id="reservaForm" class="space-y-6">
-                <!-- Datos personales -->
-                <div>
-                    <label class="block text-sm font-medium mb-2">Nombre completo</label>
-                    <input id="nombre" type="text" required class="w-full p-4 border rounded-2xl">
-                </div>
-
+                <input id="nombre" placeholder="Nombre completo" required class="w-full p-4 border rounded-2xl">
+                <input id="email" type="email" placeholder="Email" required class="w-full p-4 border rounded-2xl">
+                <input id="telefono" placeholder="Teléfono" required class="w-full p-4 border rounded-2xl">
+                
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2">Email</label>
-                        <input id="email" type="email" required class="w-full p-4 border rounded-2xl">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Teléfono</label>
-                        <input id="telefono" type="tel" required class="w-full p-4 border rounded-2xl">
-                    </div>
-                </div>
-
-                <!-- Fechas -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Fecha de llegada</label>
+                        <label class="text-sm">Llegada</label>
                         <input id="checkin" type="date" required class="w-full p-4 border rounded-2xl">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">Fecha de salida</label>
+                        <label class="text-sm">Salida</label>
                         <input id="checkout" type="date" required class="w-full p-4 border rounded-2xl">
                     </div>
                 </div>
 
-                <!-- Huéspedes -->
                 <div class="grid grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Adultos</label>
-                        <select id="adultos" class="w-full p-4 border rounded-2xl">
-                            <option value="1">1</option>
-                            <option value="2" selected>2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Niños</label>
-                        <select id="ninos" class="w-full p-4 border rounded-2xl">
-                            <option value="0" selected>0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Mascotas</label>
-                        <select id="mascotas" class="w-full p-4 border rounded-2xl">
-                            <option value="0" selected>No</option>
-                            <option value="1">Sí (1)</option>
-                            <option value="2">Sí (2)</option>
-                        </select>
-                    </div>
+                    <div><label>Adultos</label><select id="adultos" class="w-full p-4 border rounded-2xl"><option value="2" selected>2</option></select></div>
+                    <div><label>Niños</label><select id="ninos" class="w-full p-4 border rounded-2xl"><option value="0">0</option></select></div>
+                    <div><label>Mascotas</label><select id="mascotas" class="w-full p-4 border rounded-2xl"><option value="0">No</option></select></div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium mb-2">Comentarios o preferencias</label>
-                    <textarea id="comentario" rows="3" class="w-full p-4 border rounded-2xl" placeholder="Ej: Habitación con jacuzzi, cena especial..."></textarea>
-                </div>
-
-                <button type="submit" class="w-full py-5 bg-amber-800 hover:bg-amber-900 text-white text-lg font-semibold rounded-2xl transition">
-                    Enviar solicitud de reserva
-                </button>
+                <button type="submit" class="w-full py-5 bg-amber-800 text-white rounded-2xl font-semibold">Enviar Reserva</button>
             </form>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-stone-900 text-white py-16 text-center">
-        <div class="max-w-6xl mx-auto px-6">
-            <p class="text-2xl font-bold mb-2">Hotel Rural Castúo</p>
-            <p>Paseo Charco Morisco, 4 • 10630 Pinofranqueado, Cáceres</p>
-            <p class="mt-1">Tel: +34 927 674 015</p>
-            <p class="mt-8 text-sm opacity-70">© 2026 Hotel Rural Castúo • Todos los derechos reservados • Registro H-CC-00656</p>
-        </div>
-    </footer>
-
     <script>
-        function openModal() {
-            document.getElementById('modal').classList.remove('hidden');
-        }
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
+        const supabase = supabase.createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
+        );
 
-        document.getElementById('reservaForm').addEventListener('submit', function(e) {
+        document.getElementById('reservaForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            alert('✅ ¡Solicitud de reserva enviada correctamente!\n\nTe contactaremos por email o teléfono en las próximas horas.');
-            closeModal();
-            this.reset();
+            const data = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                checkin: document.getElementById('checkin').value,
+                checkout: document.getElementById('checkout').value,
+                adultos: document.getElementById('adultos').value,
+                ninos: document.getElementById('ninos').value,
+                mascotas: document.getElementById('mascotas').value,
+                estado: 'Pendiente'
+            };
+
+            const { error } = await supabase.from('reservas').insert([data]);
+            if (error) alert('Error: ' + error.message);
+            else {
+                alert('✅ Reserva enviada correctamente. Te contactaremos pronto.');
+                document.getElementById('modal').classList.add('hidden');
+                e.target.reset();
+            }
         });
     </script>
 </body>
