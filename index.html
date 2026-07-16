@@ -1,688 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Hotel Rural Castúo | Pinofranqueado · Las Hurdes</title>
-
-<meta name="description" content="Hotel Rural Castúo. Descubre un alojamiento con encanto en Pinofranqueado, en pleno corazón de Las Hurdes.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Rural Castúo - Pinofranqueado, Cáceres</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .heading-font { font-family: 'Playfair Display', serif; }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('https://source.unsplash.com/random/2000x1200/?extremadura,river,stone-house');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
-
-<body>
-
-<header>
-
-<div class="container">
-
-<a class="logo" href="#">
-
-Hotel Rural <span>Castúo</span>
-
-</a>
-
-<nav>
-
-<ul>
-
-<li><a href="#inicio">Inicio</a></li>
-
-<li><a href="#hotel">Hotel</a></li>
-
-<li><a href="#habitaciones">Habitaciones</a></li>
-
-<li><a href="#galeria">Galería</a></li>
-
-<li><a href="#entorno">Entorno</a></li>
-
-<li><a href="#contacto">Contacto</a></li>
-
-<li>
-
-<a class="btn-reserva abrir-reserva" href="#">
-
-Reservar
-
-</a>
-
-</li>
-
-</ul>
-
-</nav>
-
-</div>
-
-</header>
-
-<section class="hero" id="inicio">
-
-<div class="overlay"></div>
-
-<div class="hero-content">
-
-<p class="subtitulo">
-
-Pinofranqueado · Las Hurdes
-
-</p>
-
-<h1>
-
-Donde el silencio se convierte en descanso.
-
-</h1>
-
-<p>
-
-Descubre un hotel rural pensado para desconectar entre montañas, bosques y piscinas naturales.
-
-</p>
-
-<div class="hero-botones">
-
-<a href="#" class="boton abrir-reserva">
-
-Reservar ahora
-
-</a>
-
-<a href="#habitaciones" class="boton-secundario">
-
-Ver habitaciones
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="hotel">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>
-
-EL HOTEL
-
-</span>
-
-<h2>
-
-Tradición hurdana con el confort actual
-
-</h2>
-
-<p>
-
-El Hotel Rural Castúo combina la arquitectura tradicional de piedra y madera con instalaciones modernas para ofrecer una estancia inolvidable.
-
-</p>
-
-</div>
-
-<div class="hotel-grid">
-
-<div>
-
-<h3>
-
-Naturaleza
-
-</h3>
-
-<p>
-
-Rodeado por montañas, senderos y piscinas naturales.
-
-</p>
-
-</div>
-
-<div>
-
-<h3>
-
-Descanso
-
-</h3>
-
-<p>
-
-Habitaciones acogedoras con todas las comodidades.
-
-</p>
-
-</div>
-
-<div>
-
-<h3>
-
-Gastronomía
-
-</h3>
-
-<p>
-
-Productos locales y cocina tradicional extremeña.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="habitaciones">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>
-
-HABITACIONES
-
-</span>
-
-<h2>
-
-Diseñadas para descansar
-
-</h2>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
-
-<img src="images/habitacion1.jpg">
-
-<h3>Habitación Pizarra</h3>
-
-<p>
-
-Habitación doble con vistas a la montaña.
-
-</p>
-
-<a href="#" class="abrir-reserva">
-
-Reservar
-
-</a>
-
-</div>
-
-<div class="card">
-
-<img src="images/habitacion2.jpg">
-
-<h3>Habitación Castaño</h3>
-
-<p>
-
-Perfecta para parejas.
-
-</p>
-
-<a href="#" class="abrir-reserva">
-
-Reservar
-
-</a>
-
-</div>
-
-<div class="card">
-
-<img src="images/habitacion3.jpg">
-
-<h3>Suite Hurdes</h3>
-
-<p>
-
-La habitación más exclusiva del hotel.
-
-</p>
-
-<a href="#" class="abrir-reserva">
-
-Reservar
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- ================= GALERÍA ================= -->
-
-<section id="galeria">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>GALERÍA</span>
-
-<h2>Descubre cada rincón del Hotel Rural Castúo</h2>
-
-<p>
-Espacios cálidos, naturaleza y tranquilidad en pleno corazón de Las Hurdes.
-</p>
-
-</div>
-
-<div class="galeria-grid">
-
-<img src="images/galeria1.jpg" alt="Hotel Rural Castúo">
-
-<img src="images/galeria2.jpg" alt="Habitación">
-
-<img src="images/galeria3.jpg" alt="Restaurante">
-
-<img src="images/galeria4.jpg" alt="Terraza">
-
-<img src="images/galeria5.jpg" alt="Piscina natural">
-
-<img src="images/galeria6.jpg" alt="Las Hurdes">
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= SERVICIOS ================= -->
-
-<section id="servicios">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>SERVICIOS</span>
-
-<h2>Todo lo necesario para una estancia perfecta</h2>
-
-</div>
-
-<div class="servicios-grid">
-
-<div class="servicio">
-
-<h3>🛏 Habitaciones climatizadas</h3>
-
-<p>Habitaciones amplias con baño privado, televisión, wifi y calefacción.</p>
-
-</div>
-
-<div class="servicio">
-
-<h3>📶 WiFi gratuito</h3>
-
-<p>Conexión de alta velocidad en todas las instalaciones.</p>
-
-</div>
-
-<div class="servicio">
-
-<h3>🍽 Desayuno</h3>
-
-<p>Productos típicos de Las Hurdes y repostería casera.</p>
-
-</div>
-
-<div class="servicio">
-
-<h3>🚗 Aparcamiento</h3>
-
-<p>Zona de aparcamiento gratuita para todos los huéspedes.</p>
-
-</div>
-
-<div class="servicio">
-
-<h3>🥾 Turismo activo</h3>
-
-<p>Información sobre rutas de senderismo, piscinas naturales y miradores.</p>
-
-</div>
-
-<div class="servicio">
-
-<h3>🐶 Admitimos mascotas</h3>
-
-<p>Consulta disponibilidad antes de realizar la reserva.</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= ENTORNO ================= -->
-
-<section id="entorno">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>LAS HURDES</span>
-
-<h2>Un paraíso natural por descubrir</h2>
-
-</div>
-
-<div class="entorno-grid">
-
-<div class="lugar">
-
-<h3>🌊 Meandro del Melero</h3>
-
-<p>Uno de los paisajes más impresionantes de Extremadura.</p>
-
-</div>
-
-<div class="lugar">
-
-<h3>💧 Chorrituelo de Ovejuela</h3>
-
-<p>Una cascada espectacular rodeada de naturaleza.</p>
-
-</div>
-
-<div class="lugar">
-
-<h3>🏞 Piscinas Naturales</h3>
-
-<p>Zonas de baño de aguas cristalinas durante el verano.</p>
-
-</div>
-
-<div class="lugar">
-
-<h3>🥾 Senderismo</h3>
-
-<p>Rutas para todos los niveles entre montañas y bosques.</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= EXPERIENCIAS ================= -->
-
-<section id="experiencias">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>EXPERIENCIAS</span>
-
-<h2>Vive Las Hurdes</h2>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
-
-<h3>🚵 Rutas BTT</h3>
-
-<p>Recorre senderos únicos en bicicleta de montaña.</p>
-
-</div>
-
-<div class="card">
-
-<h3>🎣 Pesca</h3>
-
-<p>Disfruta de embalses y ríos rodeados de naturaleza.</p>
-
-</div>
-
-<div class="card">
-
-<h3>🍯 Apiturismo</h3>
-
-<p>Conoce la tradición apícola de Las Hurdes.</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- ================= OPINIONES ================= -->
-
-<section id="opiniones">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>OPINIONES</span>
-
-<h2>Lo que dicen nuestros huéspedes</h2>
-
-</div>
-
-<div class="cards">
-
-<div class="card">
-★★★★★
-<h3>María y Javier</h3>
-<p>"Un lugar precioso, tranquilo y con un trato excelente. Volveremos."</p>
-</div>
-
-<div class="card">
-★★★★★
-<h3>Carlos</h3>
-<p>"Las habitaciones son increíbles y el entorno es espectacular."</p>
-</div>
-
-<div class="card">
-★★★★★
-<h3>Ana</h3>
-<p>"Uno de los mejores hoteles rurales en los que hemos estado."</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= MAPA ================= -->
-
-<section id="contacto">
-
-<div class="container">
-
-<div class="titulo-seccion">
-
-<span>CONTACTO</span>
-
-<h2>Encuéntranos</h2>
-
-</div>
-
-<div class="mapa">
-
-<iframe
-src="https://www.google.com/maps?q=Pinofranqueado+C%C3%A1ceres&output=embed"
-width="100%"
-height="450"
-style="border:0;border-radius:18px;"
-loading="lazy">
-</iframe>
-
-</div>
-
-<div class="contacto-grid">
-
-<div>
-
-<h3>Hotel Rural Castúo</h3>
-
-<p>Pinofranqueado</p>
-
-<p>Las Hurdes · Cáceres</p>
-
-<p>España</p>
-
-</div>
-
-<div>
-
-<h3>Contacto</h3>
-
-<p>📞 +34 XXX XXX XXX</p>
-
-<p>✉ reservas@hotelcastuo.es</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-<div class="container">
-
-<h2>Hotel Rural Castúo</h2>
-
-<p>
-
-Un refugio de tranquilidad en pleno corazón de Las Hurdes.
-
-</p>
-
-<div class="footer-links">
-
-<a href="#inicio">Inicio</a>
-
-<a href="#hotel">Hotel</a>
-
-<a href="#habitaciones">Habitaciones</a>
-
-<a href="#galeria">Galería</a>
-
-<a href="#contacto">Contacto</a>
-
-</div>
-
-<p class="copyright">
-
-© 2026 Hotel Rural Castúo · Todos los derechos reservados.
-
-</p>
-
-</div>
-
-</footer>
-
-<!-- ================= MODAL RESERVAS ================= -->
-
-<div id="modalReserva" class="modal">
-
-<div class="modal-contenido">
-
-<span class="cerrar">&times;</span>
-
-<h2>Solicitar Reserva</h2>
-
-<form id="formReserva">
-
-<input
-type="text"
-placeholder="Nombre completo"
-required>
-
-<input
-type="email"
-placeholder="Correo electrónico"
-required>
-
-<input
-type="tel"
-placeholder="Teléfono">
-
-<label>Fecha de entrada</label>
-
-<input
-type="date"
-required>
-
-<label>Fecha de salida</label>
-
-<input
-type="date"
-required>
-
-<input
-type="number"
-placeholder="Número de personas"
-min="1"
-max="10"
-required>
-
-<textarea
-placeholder="Observaciones"></textarea>
-
-<button
-type="submit"
-class="boton">
-
-Enviar solicitud
-
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-<script src="script.js"></script>
-
+<body class="bg-stone-50 text-stone-800">
+
+    <!-- NAV -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-800 rounded-full flex items-center justify-center text-white text-xl font-bold">C</div>
+                <div>
+                    <span class="heading-font text-2xl font-bold tracking-tight">Castúo</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex gap-8 text-sm font-medium">
+                <a href="#habitaciones" class="hover:text-amber-700 transition">Habitaciones</a>
+                <a href="#experiencias" class="hover:text-amber-700 transition">Experiencias</a>
+                <a href="#gastronomia" class="hover:text-amber-700 transition">Gastronomía</a>
+                <a href="#galeria" class="hover:text-amber-700 transition">Galería</a>
+                <a href="#contacto" class="hover:text-amber-700 transition">Contacto</a>
+            </div>
+            
+            <a href="#reserva" class="bg-amber-800 hover:bg-amber-900 text-white px-6 py-3 rounded-full text-sm font-semibold transition">
+                Reservar Ahora
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero-bg h-screen flex items-center text-white">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <h1 class="heading-font text-6xl md:text-7xl font-bold mb-4 tracking-tighter">
+                Hotel Rural Castúo
+            </h1>
+            <p class="text-2xl md:text-3xl mb-8 opacity-90">Pinofranqueado • Las Hurdes • Cáceres</p>
+            <p class="max-w-md mx-auto text-lg mb-10">Elegancia rústica junto a la piscina natural más bella de Extremadura. Un refugio de piedra, madera y paz.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#reserva" class="bg-white text-stone-900 px-10 py-4 rounded-full font-semibold text-lg hover:bg-amber-100 transition">
+                    Reservar estancia
+                </a>
+                <a href="#galeria" class="border border-white px-10 py-4 rounded-full font-medium text-lg hover:bg-white/10 transition">
+                    Descubrir el hotel
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="heading-font text-5xl font-bold mb-6">Un paraíso en Las Hurdes</h2>
+                    <p class="text-lg text-stone-600 leading-relaxed">
+                        El Hotel Rural Castúo está situado en Pinofranqueado, junto al río de los Ángeles y su impresionante piscina natural. 
+                        Construido con piedra, madera y forja, combina la autenticidad extremeña con comodidades de alto nivel.
+                    </p>
+                    <div class="mt-8 grid grid-cols-2 gap-6">
+                        <div class="flex gap-4">
+                            <i class="fa-solid fa-check text-amber-700 mt-1"></i>
+                            <div>
+                                <strong>18 habitaciones</strong><br>
+                                <span class="text-sm text-stone-500">con jacuzzi en muchas de ellas</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <i class="fa-solid fa-check text-amber-700 mt-1"></i>
+                            <div>
+                                <strong>Restaurante propio</strong><br>
+                                <span class="text-sm text-stone-500">Cocina mediterránea y extremeña</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aspect-video bg-stone-200 rounded-3xl overflow-hidden">
+                    <img src="https://source.unsplash.com/random/1200x700/?rural,hotel,extremadura" alt="Hotel Castúo" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HABITACIONES -->
+    <section id="habitaciones" class="py-20 bg-stone-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="heading-font text-5xl font-bold text-center mb-4">Nuestras Habitaciones</h2>
+            <p class="text-center text-stone-600 mb-12 max-w-md mx-auto">18 habitaciones dobles con encanto, muchas con terraza y vistas al río o jardín.</p>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Puedes duplicar y cambiar las descripciones -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <img src="https://source.unsplash.com/random/800x600/?hotel,room,stone" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-semibold mb-2">Habitación Doble Estándar</h3>
+                        <p class="text-amber-700 font-medium mb-4">Desde 60€ / noche</p>
+                        <p class="text-stone-600">Cama de matrimonio o dos individuales, baño completo, A/C, TV y WiFi.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <img src="https://source.unsplash.com/random/800x600/?jacuzzi,hotel" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-semibold mb-2">Habitación Superior con Jacuzzi</h3>
+                        <p class="text-amber-700 font-medium mb-4">Desde 85€ / noche</p>
+                        <p class="text-stone-600">Terraza privada, bañera de hidromasaje y vistas al río.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <img src="https://source.unsplash.com/random/800x600/?suite,rustic" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-semibold mb-2">Suite Especial</h3>
+                        <p class="text-amber-700 font-medium mb-4">Desde 110€ / noche</p>
+                        <p class="text-stone-600">La más amplia, chimenea y salón independiente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Más secciones (Galería, Restaurante, Contacto, etc.) -->
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-amber-700 rounded-full flex items-center justify-center text-white text-2xl">C</div>
+                    <span class="heading-font text-3xl font-bold">Castúo</span>
+                </div>
+                <p class="text-stone-400">El refugio perfecto en el corazón de Las Hurdes.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Contacto</h4>
+                <p class="text-stone-400">Paseo Charco Morisco, 4<br>10630 Pinofranqueado, Cáceres</p>
+                <p class="mt-4 text-stone-400">+34 927 674 015</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Síguenos</h4>
+                <div class="flex gap-4 text-2xl">
+                    <a href="#" class="hover:text-amber-500"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-amber-500"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+            <div>
+                <a href="#reserva" class="block bg-amber-700 hover:bg-amber-600 text-center py-4 rounded-2xl font-semibold transition">
+                    Hacer Reserva
+                </a>
+            </div>
+        </div>
+        <div class="text-center text-stone-500 text-sm mt-16">
+            © 2026 Hotel Rural Castúo • H-CC-00656
+        </div>
+    </footer>
+
+    <script>
+        // Configuración Tailwind
+        tailwind.config = {
+            content: [],
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
 </body>
-
 </html>
