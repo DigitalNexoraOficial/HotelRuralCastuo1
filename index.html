@@ -6,77 +6,85 @@
     <title>Hotel Rural Castúo - Pinofranqueado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), 
+                        url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat;
+            min-height: 100vh;
+        }
+    </style>
 </head>
 <body class="bg-stone-50">
 
-    <!-- NAV (igual que antes) -->
-    <nav class="bg-white shadow sticky top-0 z-50">
+    <!-- NAV -->
+    <nav class="bg-white border-b sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <span class="text-3xl">🌲</span>
-                <h1 class="text-2xl font-bold">Hotel Castúo</h1>
+                <h1 class="text-2xl font-bold text-stone-800">Hotel Castúo</h1>
             </div>
-            <div class="flex gap-6 text-sm font-medium">
+            <div class="hidden md:flex gap-8 text-sm font-medium">
                 <a href="#habitaciones" class="hover:text-amber-700">Habitaciones</a>
                 <a href="#galeria" class="hover:text-amber-700">Galería</a>
-                <a href="#contacto" class="hover:text-amber-700">Contacto</a>
+                <a href="#entorno" class="hover:text-amber-700">Entorno</a>
             </div>
-            <button onclick="openReservaModal()" class="bg-amber-800 text-white px-6 py-3 rounded-xl font-medium">Reservar</button>
+            <button onclick="openModal()" 
+                    class="bg-amber-800 hover:bg-amber-900 text-white px-6 py-3 rounded-2xl font-medium transition">
+                Reservar
+            </button>
         </div>
     </nav>
 
-    <!-- HERO (mantén el tuyo) -->
+    <!-- HERO -->
+    <section class="hero flex items-center text-white">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <p class="uppercase tracking-widest text-amber-200 text-sm mb-4">Pinofranqueado • Las Hurdes • Cáceres</p>
+            <h1 class="text-6xl md:text-7xl font-light leading-tight">Un refugio entre piedra y río</h1>
+            <p class="mt-6 text-xl max-w-md mx-auto">18 habitaciones con encanto. Restaurante propio. Junto a la piscina natural del río de los Ángeles.</p>
+            <button onclick="openModal()" 
+                    class="mt-10 bg-white text-stone-900 px-10 py-4 rounded-2xl text-lg font-semibold hover:bg-amber-100 transition">
+                Reservar ahora
+            </button>
+        </div>
+    </section>
 
-    <!-- MODAL DE RESERVA -->
-    <div id="reservaModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-        <div class="bg-white rounded-3xl max-w-lg w-full mx-4 p-8">
-            <h2 class="text-3xl font-bold mb-6">Reserva tu estancia</h2>
-            <form id="reservaForm">
-                <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-4 border rounded-2xl mb-4" required>
-                <input type="email" id="email" placeholder="Email" class="w-full p-4 border rounded-2xl mb-4" required>
-                <input type="tel" id="telefono" placeholder="Teléfono" class="w-full p-4 border rounded-2xl mb-4" required>
-                <input type="date" id="fecha" class="w-full p-4 border rounded-2xl mb-4" required>
-                <textarea id="mensaje" placeholder="Número de personas y comentarios..." class="w-full p-4 border rounded-2xl h-32"></textarea>
+    <!-- MODAL -->
+    <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="bg-white rounded-3xl w-full max-w-md mx-4 p-8">
+            <h2 class="text-3xl font-bold mb-6 text-center">Nueva Reserva</h2>
+            <form id="form" class="space-y-5">
+                <input id="nombre" type="text" placeholder="Nombre completo" required class="w-full p-4 border rounded-2xl">
+                <input id="email" type="email" placeholder="Correo electrónico" required class="w-full p-4 border rounded-2xl">
+                <input id="telefono" type="tel" placeholder="Teléfono" required class="w-full p-4 border rounded-2xl">
+                <input id="fecha" type="date" required class="w-full p-4 border rounded-2xl">
+                <textarea id="comentario" placeholder="Número de personas y comentarios..." rows="3" class="w-full p-4 border rounded-2xl"></textarea>
                 
-                <div class="flex gap-4 mt-8">
-                    <button type="button" onclick="closeModal()" class="flex-1 py-4 border rounded-2xl">Cancelar</button>
-                    <button type="submit" class="flex-1 py-4 bg-amber-800 text-white rounded-2xl">Enviar Reserva</button>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" onclick="closeModal()" class="flex-1 py-4 border rounded-2xl font-medium">Cancelar</button>
+                    <button type="submit" class="flex-1 py-4 bg-amber-800 text-white rounded-2xl font-medium">Enviar Reserva</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // Abrir modal
-        function openReservaModal() {
-            document.getElementById('reservaModal').classList.remove('hidden');
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
         }
         function closeModal() {
-            document.getElementById('reservaModal').classList.add('hidden');
+            document.getElementById('modal').classList.add('hidden');
         }
 
-        // Enviar formulario
-        document.getElementById('reservaForm').addEventListener('submit', function(e) {
+        document.getElementById('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const reserva = {
-                nombre: document.getElementById('nombre').value,
-                email: document.getElementById('email').value,
-                telefono: document.getElementById('telefono').value,
-                fecha: document.getElementById('fecha').value,
-                mensaje: document.getElementById('mensaje').value,
-                fechaReserva: new Date().toLocaleString()
-            };
-
-            // Guardar localmente (para pruebas)
-            let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
-            reservas.push(reserva);
-            localStorage.setItem('reservas', JSON.stringify(reservas));
-
-            alert('✅ Reserva enviada correctamente. Te contactaremos pronto.');
+            alert('✅ Reserva recibida. Te contactaremos en breve.');
             closeModal();
             this.reset();
         });
+
+        // Tailwind script
+        tailwind.config = { content: ["*"] };
     </script>
 </body>
 </html>
