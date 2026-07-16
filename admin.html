@@ -2,12 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Control - Hotel Castúo</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: sans-serif; padding: 2rem; background: #f4f4f9; }
         table { width: 100%; background: white; border-collapse: collapse; }
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        button { padding: 8px 16px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -21,22 +23,48 @@
     </table>
 
     <script>
-        const supabase = supabase.createClient('sb_publishable_TSV_WRbLMBcXIxS9q7bx1Q_ego465L1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c');
+        // OJO: usamos "supabaseClient" como nombre propio, NUNCA "supabase",
+        // porque "supabase" ya es el objeto global que trae el script del CDN.
+        const supabaseClient = supabase.createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
+        );
 
         async function verificarSesion() {
-            const { data } = await supabase.auth.getSession();
+            const { data } = await supabaseClient.auth.getSession();
             if (!data.session) window.location.href = 'login.html';
             else cargarReservas();
         }
 
         async function cargarReservas() {
-            const { data } = await supabase.from('reservas').select('*');
+            const { data, error } = await supabaseClient
+                .from('reservas')
+                .select('*')
+                .order('fecha', { ascending: true });
+
+            if (error) {
+                alert('Error al cargar reservas: ' + error.message);
+                return;
+            }
+
             const tbody = document.getElementById('contenidoTabla');
-            tbody.innerHTML = data.map(r => `<tr><td>${r.nombre}</td><td>${r.email}</td><td>${r.fecha}</td></tr>`).join('');
+            tbody.innerHTML = '';
+
+            // Construimos las filas con textContent en vez de innerHTML,
+            // para que un nombre/email con código HTML no se ejecute (XSS).
+            data.forEach(r => {
+                const tr = document.createElement('tr');
+                ['nombre', 'email', 'fecha'].forEach(campo => {
+                    const td = document.createElement('td');
+                    td.textContent = r[campo] ?? '';
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
         }
 
         async function logout() {
-            await supabase.auth.signOut();
+            await supabaseClient.auth.signOut();
             window.location.href = 'login.html';
         }
 
