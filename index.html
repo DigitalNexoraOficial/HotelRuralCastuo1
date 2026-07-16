@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hotel Rural Castúo · Pinofranqueado, Las Hurdes</title>
-    <meta name="description" content="Hotel Rural Castúo, un refugio de piedra y castaños en Pinofranqueado, Las Hurdes, Extremadura. Elegancia rústica junto al río de los Ángeles." />
+    <title>Hotel Rural Castúo | Pinofranqueado, Las Hurdes</title>
+    <meta name="description" content="Hotel Rural Castúo en Pinofranqueado, Cáceres. Refugio de piedra y madera junto al río de los Ángeles. Elegancia rústica en el corazón de Las Hurdes." />
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -19,82 +19,167 @@
             --piedra:#EEE9DC;
             --musgo:#4B5A3E;
             --cobre:#A8592C;
-            --crema-suave:#FBF9F3;
+            --crema:#FBF9F3;
         }
         *{box-sizing:border-box;}
-        body{
-            margin:0;
-            background:var(--piedra);
-            color:var(--pizarra);
-            font-family:'Manrope',sans-serif;
-            line-height:1.65;
-        }
-        h1,h2,h3{font-family:'Fraunces',serif; font-weight:500; letter-spacing:-.01em;}
+        body{margin:0; font-family:'Manrope',sans-serif; background:var(--piedra); color:var(--pizarra);}
+        h1,h2,h3{font-family:'Fraunces',serif; font-weight:500; letter-spacing:-0.02em;}
         
-        /* Resto de tus estilos originales + mejoras */
-        .hero{
-            background: linear-gradient(rgba(30,36,32,0.55), rgba(30,36,32,0.65)), 
-                        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
-            min-height:100vh;
-            display:flex;
-            align-items:flex-end;
+        .nav{
+            position:fixed; top:0; left:0; right:0; z-index:1000;
+            background:rgba(30,36,32,0.95); backdrop-filter:blur(12px);
+            padding:18px 5vw; display:flex; justify-content:space-between; align-items:center; color:white;
         }
-        /* ... (mantengo tu CSS completo y añado mejoras) */
+        .hero{
+            height:100vh; background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), 
+            url('https://images.unsplash.com/photo-1542314832-5c5f9c5f5f5f?auto=format&fit=crop&w=2000&q=80') center/cover;
+            display:flex; align-items:flex-end; color:white;
+        }
+        .container{max-width:1180px; margin:0 auto; padding:0 5vw;}
+        
+        .btn{
+            padding:16px 32px; border-radius:8px; font-weight:600; cursor:pointer;
+            transition:all 0.3s;
+        }
+        .btn-cobre{background:var(--cobre); color:white;}
+        .btn-cobre:hover{background:#8E4A24; transform:translateY(-3px);}
+        
+        .section{padding:100px 0;}
+        .room-card{
+            background:white; border-radius:16px; overflow:hidden; box-shadow:0 20px 40px -20px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
 
-<!-- Tu código anterior mejorado aquí -->
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="flex items-center gap-3">
+            <span class="text-3xl">🌲</span>
+            <span class="text-2xl font-bold tracking-tight">Castúo</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm">
+            <a href="#sobre" class="hover:text-amber-300">El Hotel</a>
+            <a href="#habitaciones" class="hover:text-amber-300">Habitaciones</a>
+            <a href="#entorno" class="hover:text-amber-300">Entorno</a>
+            <a href="#galeria" class="hover:text-amber-300">Galería</a>
+        </div>
+        <a href="#reservar" class="btn btn-cobre">Reservar</a>
+    </nav>
 
-<header class="nav" id="nav">
-  <a href="#" class="nav__brand">Castúo<span>.</span></a>
-  <!-- resto del nav -->
-</header>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container pb-20">
+            <p class="uppercase tracking-widest text-amber-300 text-sm mb-4">Pinofranqueado • Las Hurdes • Cáceres</p>
+            <h1 class="text-6xl md:text-7xl font-light leading-none mb-6">Un refugio de piedra<br>y silencio.</h1>
+            <p class="max-w-md text-lg">Hotel rural con encanto junto al río de los Ángeles. 18 habitaciones, restaurante propio y la auténtica hospitalidad extremeña.</p>
+            <div class="mt-10 flex gap-4">
+                <a href="#reservar" class="btn btn-cobre text-lg">Reservar estancia</a>
+                <a href="#habitaciones" class="btn border border-white text-white text-lg">Ver habitaciones</a>
+            </div>
+        </div>
+    </section>
 
-<section class="hero" id="inicio">
-  <!-- Hero mejorado con foto más representativa del hotel -->
-  <div class="container hero__inner">
-    <p class="eyebrow">Pinofranqueado · Cáceres · Extremadura</p>
-    <h1>Donde la piedra y el río se encuentran.</h1>
-    <p>Un hotel rural con alma hurdana. 18 habitaciones con encanto, restaurante propio y ubicación privilegiada junto a la piscina natural del río de los Ángeles.</p>
-    <div class="hero__actions">
-      <a href="#reservar" class="btn btn-cobre">Reservar estancia</a>
-      <a href="#habitaciones" class="btn btn-linea">Explorar habitaciones</a>
-    </div>
-  </div>
-</section>
+    <!-- SOBRE -->
+    <section id="sobre" class="section bg-white">
+        <div class="container">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-5xl">Una casa hurdana reconstruida con alma.</h2>
+                    <p class="mt-8 text-lg leading-relaxed">Construido con pizarra, madera de castaño y piedra local, el Hotel Rural Castúo respeta la arquitectura tradicional mientras ofrece comodidades modernas. Ubicado junto a una de las piscinas naturales más bellas de Las Hurdes.</p>
+                </div>
+                <div class="aspect-video bg-stone-200 rounded-3xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Hotel Castúo" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Mantengo tus secciones de "sobre", "habitaciones", "entorno" y "reservar" -->
+    <!-- HABITACIONES -->
+    <section id="habitaciones" class="section bg-stone-100">
+        <div class="container">
+            <h2 class="text-5xl text-center mb-12">Nuestras Habitaciones</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="room-card">
+                    <img src="https://source.unsplash.com/random/600x400/?hotel,room" class="w-full h-64 object-cover" alt="Pizarra">
+                    <div class="p-8">
+                        <h3 class="text-2xl">Habitación Pizarra</h3>
+                        <p class="text-amber-700 font-medium">Desde 95€ / noche</p>
+                        <p class="mt-3 text-stone-600">Muros de piedra, vistas a la sierra y baño completo.</p>
+                    </div>
+                </div>
+                <!-- Repite para las otras 2 habitaciones -->
+            </div>
+        </div>
+    </section>
 
-<!-- Añado una sección de Galería rápida -->
-<section class="section" id="galeria">
-  <div class="container">
-    <div class="section__head">
-      <p class="eyebrow">Galería</p>
-      <h2>El alma del Castúo</h2>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <!-- Añade aquí tus fotos reales cuando las subas -->
-      <img src="https://source.unsplash.com/random/600x400/?rural,stone,hotel" class="rounded-2xl" alt="Hotel Castúo">
-      <img src="https://source.unsplash.com/random/600x400/?river,extremadura" class="rounded-2xl" alt="Río de los Ángeles">
-      <!-- ... más imágenes -->
-    </div>
-  </div>
-</section>
+    <!-- GALERÍA -->
+    <section id="galeria" class="section">
+        <div class="container">
+            <h2 class="text-5xl text-center mb-12">Galería</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Sustituye estas URLs por tus fotos reales cuando las subas -->
+                <img src="https://source.unsplash.com/random/600x400/?extremadura,river" class="rounded-2xl" alt="">
+                <img src="https://source.unsplash.com/random/600x400/?stone,house" class="rounded-2xl" alt="">
+                <img src="https://source.unsplash.com/random/600x400/?jacuzzi,hotel" class="rounded-2xl" alt="">
+                <img src="https://source.unsplash.com/random/600x400/?restaurant,rustic" class="rounded-2xl" alt="">
+            </div>
+        </div>
+    </section>
 
-<footer class="footer">
-  <!-- Tu footer -->
-</footer>
+    <!-- RESERVAR -->
+    <section id="reservar" class="section bg-white">
+        <div class="container max-w-2xl">
+            <h2 class="text-5xl text-center mb-8">Reserva tu estancia</h2>
+            <form id="formReserva" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input type="text" id="nombre" placeholder="Nombre completo" required class="w-full p-4 border rounded-xl">
+                    <input type="email" id="email" placeholder="Email" required class="w-full p-4 border rounded-xl">
+                </div>
+                <input type="date" id="fecha" required class="w-full p-4 border rounded-xl">
+                <textarea id="mensaje" rows="4" placeholder="Mensaje o preferencias..." class="w-full p-4 border rounded-xl"></textarea>
+                <button type="submit" class="btn btn-cobre w-full text-xl py-6">Enviar solicitud de reserva</button>
+            </form>
+        </div>
+    </section>
 
-<script>
-  // Tu script de nav, reveal y Supabase (lo mantengo)
-  const supabaseClient = supabase.createClient(
-    'https://sushapqkyixbhpjemrbk.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
-  );
+    <!-- FOOTER -->
+    <footer class="bg-[#1E2420] text-white py-16">
+        <div class="container text-center">
+            <p class="text-2xl">Hotel Rural Castúo</p>
+            <p>Paseo Charco Morisco, 4 • 10630 Pinofranqueado, Cáceres</p>
+            <p class="mt-6">© 2026 • H-CC-00656</p>
+        </div>
+    </footer>
 
-  // Formulario (tu código)
-  document.getElementById('formReserva').addEventListener('submit', async (e) => { ... });
-</script>
+    <script>
+        // Supabase (tu configuración)
+        const supabaseClient = supabase.createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
+        );
+
+        document.getElementById('formReserva').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.textContent = 'Enviando...';
+            btn.disabled = true;
+
+            const { error } = await supabaseClient.from('reservas').insert([{
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                fecha: document.getElementById('fecha').value,
+                mensaje: document.getElementById('mensaje').value,
+            }]);
+
+            if (error) alert('Error: ' + error.message);
+            else {
+                alert('¡Gracias! Te contactaremos pronto.');
+                e.target.reset();
+            }
+            btn.textContent = 'Enviar solicitud de reserva';
+            btn.disabled = false;
+        });
+    </script>
 </body>
 </html>
