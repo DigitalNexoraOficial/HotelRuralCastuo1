@@ -2,73 +2,57 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de Control - Hotel Castúo</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body { font-family: sans-serif; padding: 2rem; background: #f4f4f9; }
-        table { width: 100%; background: white; border-collapse: collapse; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        button { padding: 8px 16px; cursor: pointer; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Hotel Castúo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Reservas Recibidas</h1>
-    <button onclick="logout()">Cerrar Sesión</button>
-    <table id="tablaReservas">
-        <thead>
-            <tr><th>Nombre</th><th>Email</th><th>Fecha</th></tr>
-        </thead>
-        <tbody id="contenidoTabla"></tbody>
-    </table>
+<body class="bg-stone-100 p-6">
+
+    <div id="loginScreen">
+        <h1 class="text-3xl font-bold text-center mb-8">Panel de Administración</h1>
+        <input type="password" id="password" placeholder="Contraseña" class="w-full max-w-xs mx-auto block p-4 border rounded-2xl text-center">
+        <button onclick="login()" class="mt-4 w-full max-w-xs mx-auto block bg-amber-800 text-white py-4 rounded-2xl">Entrar</button>
+    </div>
+
+    <div id="adminPanel" class="hidden">
+        <h1 class="text-3xl font-bold mb-6">Reservas Recibidas</h1>
+        <div id="reservasList" class="space-y-4"></div>
+    </div>
 
     <script>
-        // OJO: usamos "supabaseClient" como nombre propio, NUNCA "supabase",
-        // porque "supabase" ya es el objeto global que trae el script del CDN.
-        const supabaseClient = supabase.createClient(
-            'https://sushapqkyixbhpjemrbk.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
-        );
+        const correctPassword = "castuo2026"; // Cambia esta contraseña
 
-        async function verificarSesion() {
-            const { data } = await supabaseClient.auth.getSession();
-            if (!data.session) window.location.href = 'login.html';
-            else cargarReservas();
+        function login() {
+            if (document.getElementById('password').value === correctPassword) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadReservas();
+            } else {
+                alert("Contraseña incorrecta");
+            }
         }
 
-        async function cargarReservas() {
-            const { data, error } = await supabaseClient
-                .from('reservas')
-                .select('*')
-                .order('fecha', { ascending: true });
-
-            if (error) {
-                alert('Error al cargar reservas: ' + error.message);
+        function loadReservas() {
+            const reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+            const container = document.getElementById('reservasList');
+            container.innerHTML = '';
+            
+            if (reservas.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-500">No hay reservas aún.</p>';
                 return;
             }
 
-            const tbody = document.getElementById('contenidoTabla');
-            tbody.innerHTML = '';
-
-            // Construimos las filas con textContent en vez de innerHTML,
-            // para que un nombre/email con código HTML no se ejecute (XSS).
-            data.forEach(r => {
-                const tr = document.createElement('tr');
-                ['nombre', 'email', 'fecha'].forEach(campo => {
-                    const td = document.createElement('td');
-                    td.textContent = r[campo] ?? '';
-                    tr.appendChild(td);
-                });
-                tbody.appendChild(tr);
+            reservas.forEach(r => {
+                const div = document.createElement('div');
+                div.className = "bg-white p-6 rounded-3xl shadow";
+                div.innerHTML = `
+                    <p><strong>${r.nombre}</strong> - ${r.fecha}</p>
+                    <p>${r.email} | ${r.telefono}</p>
+                    <p class="text-sm text-gray-600 mt-2">${r.mensaje}</p>
+                `;
+                container.appendChild(div);
             });
         }
-
-        async function logout() {
-            await supabaseClient.auth.signOut();
-            window.location.href = 'login.html';
-        }
-
-        verificarSesion();
     </script>
 </body>
 </html>
