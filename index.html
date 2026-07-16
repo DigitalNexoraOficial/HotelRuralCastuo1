@@ -166,7 +166,9 @@
   @media (max-width:840px){ .hero__scroll{display:none;} }
 
   /* ---------- REVEAL ---------- */
-  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s var(--ease), transform .8s var(--ease);}
+  /* Visible por defecto: si el JS no llega a ejecutarse, el contenido igualmente se ve. */
+  .reveal{transition:opacity .8s var(--ease), transform .8s var(--ease);}
+  .reveal.pre{opacity:0; transform:translateY(26px);}
   .reveal.in{opacity:1; transform:translateY(0);}
 
   /* ---------- INTRO ---------- */
@@ -412,6 +414,4 @@
       <div class="entorno-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v6M8 9h8l1 4a5 5 0 0 1-10 0z"/><path d="M9 21h6"/></svg>
         <h3>Mesa hurdana</h3>
-        <p>Miel, mantecados, perrunillas y floretas, la repostería propia de la comarca.</p>
-      </div>
-    </d
+      
