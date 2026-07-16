@@ -9,8 +9,23 @@
 </head>
 <body class="bg-stone-50">
 
+    <!-- BARRA SUPERIOR DE CONTACTO -->
+    <div class="bg-stone-800 text-white py-3 text-sm">
+        <div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-6">
+                <a href="tel:+34927674015" class="flex items-center gap-2 hover:text-amber-400">
+                    <i class="fas fa-phone"></i> +34 927 674 015
+                </a>
+                <a href="https://wa.me/346XXXXXXXX" target="_blank" class="flex items-center gap-2 hover:text-amber-400">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+            <div class="text-amber-400 text-xs">Pinofranqueado • Las Hurdes • Cáceres</div>
+        </div>
+    </div>
+
     <!-- NAV -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+    <nav class="bg-white shadow sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <span class="text-4xl">🌲</span>
@@ -25,18 +40,18 @@
     <!-- HERO -->
     <section class="min-h-screen bg-cover bg-center flex items-center text-white relative" 
              style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/2000/1200');">
-        <div class="max-w-4xl mx-auto text-center px-6 z-10">
-            <p class="uppercase tracking-[3px] text-amber-200 text-sm mb-6">Pinofranqueado • Las Hurdes • Cáceres</p>
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <p class="uppercase tracking-widest text-amber-200 text-sm mb-6">Pinofranqueado • Las Hurdes • Cáceres</p>
             <h1 class="text-6xl md:text-7xl font-light leading-tight">Un refugio entre piedra y río</h1>
-            <p class="mt-8 text-xl max-w-xl mx-auto">Hotel rural con encanto junto a la piscina natural más bella de Las Hurdes. Piedra, madera y hospitalidad extremeña.</p>
-            <button onclick="openModal()" class="mt-12 bg-white text-stone-900 px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-amber-100">
+            <p class="mt-8 text-xl max-w-xl mx-auto">Hotel rural con encanto junto a la piscina natural más bella de Las Hurdes.</p>
+            <button onclick="openModal()" class="mt-12 bg-white text-stone-900 px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-amber-100 transition">
                 Reservar estancia
             </button>
         </div>
     </section>
 
-    <!-- MODAL -->
-    <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+    <!-- MODAL DE RESERVA -->
+    <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
         <div class="bg-white rounded-3xl w-full max-w-md mx-4 p-8">
             <h2 class="text-3xl font-bold mb-6">Nueva Reserva</h2>
             <form id="form" class="space-y-5">
@@ -52,6 +67,22 @@
         </div>
     </div>
 
+    <!-- PIE DE PÁGINA -->
+    <footer class="bg-stone-900 text-white py-16">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="flex justify-center items-center gap-3 mb-6">
+                <span class="text-5xl">🌲</span>
+                <span class="text-3xl font-bold">Hotel Rural Castúo</span>
+            </div>
+            <p class="text-lg">Paseo Charco Morisco, 4 • 10630 Pinofranqueado, Cáceres, Extremadura</p>
+            <p class="mt-2">Teléfono: +34 927 674 015</p>
+            
+            <div class="mt-10 pt-8 border-t border-stone-700 text-sm opacity-70">
+                © 2026 Hotel Rural Castúo • H-CC-00656 • Todos los derechos reservados
+            </div>
+        </div>
+    </footer>
+
     <script>
         function openModal() {
             document.getElementById('modal').classList.remove('hidden');
@@ -62,7 +93,7 @@
 
         document.getElementById('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('✅ Reserva enviada correctamente. Nos pondremos en contacto pronto.');
+            alert('✅ ¡Reserva enviada! Nos pondremos en contacto pronto.');
             closeModal();
             this.reset();
         });
