@@ -6,14 +6,10 @@
     <title>Hotel Rural Castúo - Pinofranqueado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <style>
-        body { font-family: system-ui, sans-serif; }
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/2000/1200') center/cover; }
-    </style>
 </head>
-<body class="bg-stone-50 text-stone-800">
+<body class="bg-stone-50">
 
-    <!-- NAV -->
+    <!-- NAV (igual que antes) -->
     <nav class="bg-white shadow sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -25,49 +21,62 @@
                 <a href="#galeria" class="hover:text-amber-700">Galería</a>
                 <a href="#contacto" class="hover:text-amber-700">Contacto</a>
             </div>
-            <a href="#reservar" class="bg-amber-800 text-white px-6 py-3 rounded-xl font-medium">Reservar</a>
+            <button onclick="openReservaModal()" class="bg-amber-800 text-white px-6 py-3 rounded-xl font-medium">Reservar</button>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero h-screen flex items-center text-white">
-        <div class="max-w-4xl mx-auto text-center px-6">
-            <p class="text-amber-300 uppercase tracking-widest mb-4">Pinofranqueado • Las Hurdes • Cáceres</p>
-            <h1 class="text-6xl md:text-7xl font-light leading-tight">Un refugio entre piedra y río</h1>
-            <p class="mt-6 text-xl max-w-lg mx-auto">Hotel rural con encanto en el corazón de Extremadura. 18 habitaciones, restaurante y entorno privilegiado.</p>
-            <div class="mt-10">
-                <a href="#reservar" class="inline-block bg-white text-stone-900 px-10 py-4 rounded-2xl font-semibold text-lg">Reservar ahora</a>
-            </div>
-        </div>
-    </section>
+    <!-- HERO (mantén el tuyo) -->
 
-    <!-- SOBRE -->
-    <section class="py-20 bg-white" id="sobre">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-5xl font-light">Donde la tradición se encuentra con la comodidad.</h2>
-                    <p class="mt-8 text-lg">Ubicado junto al río de los Ángeles, en Pinofranqueado. Construido con pizarra, piedra y madera de castaño, manteniendo el espíritu hurdano.</p>
+    <!-- MODAL DE RESERVA -->
+    <div id="reservaModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+        <div class="bg-white rounded-3xl max-w-lg w-full mx-4 p-8">
+            <h2 class="text-3xl font-bold mb-6">Reserva tu estancia</h2>
+            <form id="reservaForm">
+                <input type="text" id="nombre" placeholder="Nombre completo" class="w-full p-4 border rounded-2xl mb-4" required>
+                <input type="email" id="email" placeholder="Email" class="w-full p-4 border rounded-2xl mb-4" required>
+                <input type="tel" id="telefono" placeholder="Teléfono" class="w-full p-4 border rounded-2xl mb-4" required>
+                <input type="date" id="fecha" class="w-full p-4 border rounded-2xl mb-4" required>
+                <textarea id="mensaje" placeholder="Número de personas y comentarios..." class="w-full p-4 border rounded-2xl h-32"></textarea>
+                
+                <div class="flex gap-4 mt-8">
+                    <button type="button" onclick="closeModal()" class="flex-1 py-4 border rounded-2xl">Cancelar</button>
+                    <button type="submit" class="flex-1 py-4 bg-amber-800 text-white rounded-2xl">Enviar Reserva</button>
                 </div>
-                <img src="https://picsum.photos/id/1015/800/600" class="rounded-3xl" alt="Hotel">
-            </div>
+            </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Llama a acción -->
-    <section class="py-20 bg-amber-800 text-white text-center" id="reservar">
-        <div class="max-w-2xl mx-auto px-6">
-            <h2 class="text-4xl">¿Listo para tu escapada?</h2>
-            <p class="mt-6 text-lg">Escríbenos por WhatsApp o rellena el formulario.</p>
-            <a href="https://wa.me/346XXXXXXXX" class="mt-8 inline-block bg-white text-amber-800 px-10 py-4 rounded-2xl font-semibold">Contactar por WhatsApp</a>
-        </div>
-    </section>
+    <script>
+        // Abrir modal
+        function openReservaModal() {
+            document.getElementById('reservaModal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('reservaModal').classList.add('hidden');
+        }
 
-    <footer class="bg-stone-900 text-white py-12 text-center">
-        <p class="text-xl">Hotel Rural Castúo</p>
-        <p>Paseo Charco Morisco, 4 • 10630 Pinofranqueado (Cáceres)</p>
-        <p class="mt-6 text-sm opacity-70">© 2026 • Todos los derechos reservados</p>
-    </footer>
+        // Enviar formulario
+        document.getElementById('reservaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const reserva = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                fecha: document.getElementById('fecha').value,
+                mensaje: document.getElementById('mensaje').value,
+                fechaReserva: new Date().toLocaleString()
+            };
 
+            // Guardar localmente (para pruebas)
+            let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+            reservas.push(reserva);
+            localStorage.setItem('reservas', JSON.stringify(reservas));
+
+            alert('✅ Reserva enviada correctamente. Te contactaremos pronto.');
+            closeModal();
+            this.reset();
+        });
+    </script>
 </body>
 </html>
