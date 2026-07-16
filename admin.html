@@ -12,22 +12,19 @@
     <div class="max-w-7xl mx-auto p-6">
         <div class="flex justify-between items-center mb-8">
             <div>
-                <h1 class="text-4xl font-bold text-stone-800">Panel de Control</h1>
+                <h1 class="text-4xl font-bold">Panel de Administración</h1>
                 <p class="text-stone-500">Hotel Rural Castúo</p>
             </div>
-            <a href="index.html" class="text-amber-700 hover:underline flex items-center gap-2">
+            <a href="index.html" class="flex items-center gap-2 text-amber-700 hover:underline">
                 <i class="fas fa-home"></i> Volver a la web
             </a>
         </div>
 
-        <div class="bg-white rounded-3xl shadow p-6">
+        <div class="bg-white rounded-3xl shadow p-8">
             <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
                 <i class="fas fa-list"></i> Reservas Recibidas
             </h2>
-            
-            <div id="tablaReservas" class="overflow-x-auto">
-                <!-- Las reservas se cargan aquí automáticamente -->
-            </div>
+            <div id="tabla" class="overflow-x-auto"></div>
         </div>
     </div>
 
@@ -43,49 +40,42 @@
                 .select('*')
                 .order('created_at', { ascending: false });
 
-            const container = document.getElementById('tablaReservas');
-            
-            if (error || !data || data.length === 0) {
-                container.innerHTML = `<p class="text-center py-12 text-stone-500">Todavía no hay reservas.</p>`;
+            const container = document.getElementById('tabla');
+
+            if (error) {
+                container.innerHTML = `<p class="text-red-500">Error al cargar: ${error.message}</p>`;
                 return;
             }
 
-            let html = `
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b">
-                            <th class="text-left py-4">Cliente</th>
-                            <th class="text-left py-4">Fechas</th>
-                            <th class="text-left py-4">Personas</th>
-                            <th class="text-left py-4">Estado</th>
-                            <th class="text-center py-4">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            if (!data || data.length === 0) {
+                container.innerHTML = `<p class="text-center py-12 text-stone-500">No hay reservas todavía.</p>`;
+                return;
+            }
+
+            let html = `<table class="w-full min-w-full"><thead><tr class="border-b text-left">
+                <th class="py-4">Cliente</th>
+                <th class="py-4">Fechas</th>
+                <th class="py-4">Contacto</th>
+                <th class="py-4">Estado</th>
+            </tr></thead><tbody>`;
 
             data.forEach(r => {
                 html += `
                     <tr class="border-b hover:bg-stone-50">
                         <td class="py-5">
                             <div class="font-medium">${r.nombre}</div>
-                            <div class="text-sm text-stone-500">${r.email}</div>
                         </td>
                         <td class="py-5">
-                            <div>${r.checkin} → ${r.checkout}</div>
+                            ${r.checkin} → ${r.checkout}
                         </td>
                         <td class="py-5">
-                            ${r.adultos} adultos ${r.ninos ? `· ${r.ninos} niños` : ''}
+                            <div>${r.email}</div>
+                            <div class="text-sm">${r.telefono}</div>
                         </td>
                         <td class="py-5">
                             <span class="px-4 py-1 rounded-full text-sm ${r.estado === 'Confirmada' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
                                 ${r.estado || 'Pendiente'}
                             </span>
-                        </td>
-                        <td class="py-5 text-center">
-                            <button onclick="cambiarEstado('${r.id}')" class="text-amber-700 hover:underline text-sm">
-                                Cambiar Estado
-                            </button>
                         </td>
                     </tr>
                 `;
@@ -96,7 +86,7 @@
         }
 
         // Cargar al abrir la página
-        cargarReservas();
+        window.onload = cargarReservas;
     </script>
 </body>
 </html>
