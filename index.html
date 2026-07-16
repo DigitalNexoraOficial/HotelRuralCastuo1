@@ -3,73 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Rural Castúo</title>
+    <title>Hotel Rural Castúo - Pinofranqueado</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body class="bg-stone-50">
 
-    <!-- NAV + HERO (mantengo lo anterior) -->
+    <!-- NAV -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-4xl">🌲</span>
+                <h1 class="text-2xl font-bold">Hotel Castúo</h1>
+            </div>
+            <button onclick="openModal()" class="bg-amber-800 text-white px-8 py-3 rounded-2xl font-medium hover:bg-amber-900 transition">
+                Reservar
+            </button>
+        </div>
+    </nav>
 
-    <!-- MODAL DE RESERVA -->
-    <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-        <div class="bg-white rounded-3xl w-full max-w-lg mx-4 p-8">
+    <!-- HERO -->
+    <section class="min-h-screen bg-cover bg-center flex items-center text-white relative" 
+             style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/2000/1200');">
+        <div class="max-w-4xl mx-auto text-center px-6 z-10">
+            <p class="uppercase tracking-[3px] text-amber-200 text-sm mb-6">Pinofranqueado • Las Hurdes • Cáceres</p>
+            <h1 class="text-6xl md:text-7xl font-light leading-tight">Un refugio entre piedra y río</h1>
+            <p class="mt-8 text-xl max-w-xl mx-auto">Hotel rural con encanto junto a la piscina natural más bella de Las Hurdes. Piedra, madera y hospitalidad extremeña.</p>
+            <button onclick="openModal()" class="mt-12 bg-white text-stone-900 px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-amber-100">
+                Reservar estancia
+            </button>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="bg-white rounded-3xl w-full max-w-md mx-4 p-8">
             <h2 class="text-3xl font-bold mb-6">Nueva Reserva</h2>
-            <form id="reservaForm" class="space-y-6">
+            <form id="form" class="space-y-5">
                 <input id="nombre" placeholder="Nombre completo" required class="w-full p-4 border rounded-2xl">
                 <input id="email" type="email" placeholder="Email" required class="w-full p-4 border rounded-2xl">
                 <input id="telefono" placeholder="Teléfono" required class="w-full p-4 border rounded-2xl">
-                
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-sm">Llegada</label>
-                        <input id="checkin" type="date" required class="w-full p-4 border rounded-2xl">
-                    </div>
-                    <div>
-                        <label class="text-sm">Salida</label>
-                        <input id="checkout" type="date" required class="w-full p-4 border rounded-2xl">
-                    </div>
+                    <input id="checkin" type="date" required class="w-full p-4 border rounded-2xl">
+                    <input id="checkout" type="date" required class="w-full p-4 border rounded-2xl">
                 </div>
-
-                <div class="grid grid-cols-3 gap-4">
-                    <div><label>Adultos</label><select id="adultos" class="w-full p-4 border rounded-2xl"><option value="2" selected>2</option></select></div>
-                    <div><label>Niños</label><select id="ninos" class="w-full p-4 border rounded-2xl"><option value="0">0</option></select></div>
-                    <div><label>Mascotas</label><select id="mascotas" class="w-full p-4 border rounded-2xl"><option value="0">No</option></select></div>
-                </div>
-
                 <button type="submit" class="w-full py-5 bg-amber-800 text-white rounded-2xl font-semibold">Enviar Reserva</button>
             </form>
         </div>
     </div>
 
     <script>
-        const supabase = supabase.createClient(
-            'https://sushapqkyixbhpjemrbk.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
-        );
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
 
-        document.getElementById('reservaForm').addEventListener('submit', async (e) => {
+        document.getElementById('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const data = {
-                nombre: document.getElementById('nombre').value,
-                email: document.getElementById('email').value,
-                telefono: document.getElementById('telefono').value,
-                checkin: document.getElementById('checkin').value,
-                checkout: document.getElementById('checkout').value,
-                adultos: document.getElementById('adultos').value,
-                ninos: document.getElementById('ninos').value,
-                mascotas: document.getElementById('mascotas').value,
-                estado: 'Pendiente'
-            };
-
-            const { error } = await supabase.from('reservas').insert([data]);
-            if (error) alert('Error: ' + error.message);
-            else {
-                alert('✅ Reserva enviada correctamente. Te contactaremos pronto.');
-                document.getElementById('modal').classList.add('hidden');
-                e.target.reset();
-            }
+            alert('✅ Reserva enviada correctamente. Nos pondremos en contacto pronto.');
+            closeModal();
+            this.reset();
         });
     </script>
 </body>
