@@ -18,6 +18,7 @@
     .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
     .btn { display: inline-flex; align-items: center; padding: 13px 22px; border-radius: 999px; font-weight: 600; cursor: pointer; border: none; transition: .25s; }
     .btn-primary { background: var(--terracota); color: white; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
     .topbar { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; background: rgba(246,241,230,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--borde); }
     .brand { font-weight: 800; color: var(--verde); text-transform: uppercase; }
     .nav { display: flex; gap: 18px; }
@@ -74,23 +75,33 @@
             <label>Nombre<input id="nombre" required /></label>
             <label>Email<input id="email" type="email" required /></label>
             <label>Fecha<input id="fecha" type="date" required /></label>
-            <label>Personas<input id="personas" type="number" value="2" /></label>
+            <label>Personas<input id="personas" type="number" value="2" min="1" /></label>
             <label class="full">Mensaje<textarea id="mensaje"></textarea></label>
           </div>
           <br>
-          <button class="btn btn-primary" type="submit">Enviar Reserva</button>
+          <button class="btn btn-primary" type="submit" id="btnEnviar">Enviar Reserva</button>
         </form>
       </div>
     </div>
   </section>
 
   <script>
-    // Configura aquí tus claves de Supabase
-    const supabase = supabase.createClient('TU_SUPABASE_URL', 'TU_SUPABASE_ANON_KEY');
+    // OJO: usamos "supabaseClient" como nombre propio, NUNCA "supabase",
+    // porque "supabase" ya es el objeto global que trae el script del CDN.
+    const supabaseClient = supabase.createClient(
+      'https://sushapqkyixbhpjemrbk.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
+    );
 
-    document.getElementById('formReserva').addEventListener('submit', async (e) => {
+    const formReserva = document.getElementById('formReserva');
+    const btnEnviar = document.getElementById('btnEnviar');
+
+    formReserva.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const { error } = await supabase.from('reservas').insert([{
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = 'Enviando...';
+
+      const { error } = await supabaseClient.from('reservas').insert([{
         nombre: document.getElementById('nombre').value,
         email: document.getElementById('email').value,
         fecha: document.getElementById('fecha').value,
@@ -99,8 +110,15 @@
         estado: 'Nueva'
       }]);
 
-      if (error) alert("Error al reservar: " + error.message);
-      else { alert("¡Reserva enviada con éxito!"); document.getElementById('formReserva').reset(); }
+      if (error) {
+        alert('Error al reservar: ' + error.message);
+      } else {
+        alert('¡Reserva enviada con éxito!');
+        formReserva.reset();
+      }
+
+      btnEnviar.disabled = false;
+      btnEnviar.textContent = 'Enviar Reserva';
     });
   </script>
 </body>
