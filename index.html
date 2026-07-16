@@ -6,20 +6,19 @@
     <title>Hotel Rural Castúo - Pinofranqueado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-stone-50">
 
-    <!-- BARRA SUPERIOR DE CONTACTO (blanca) -->
+    <!-- BARRA SUPERIOR DE CONTACTO -->
     <div class="bg-white border-b sticky top-0 z-50 shadow-sm">
         <div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap justify-between items-center gap-4 text-sm">
             <div class="flex items-center gap-6 text-stone-600">
-                <a href="tel:+34927674015" class="flex items-center gap-2 hover:text-amber-700 transition">
-                    <i class="fas fa-phone"></i> 
-                    +34 927 674 015
+                <a href="tel:+34927674015" class="flex items-center gap-2 hover:text-amber-700">
+                    <i class="fas fa-phone"></i> +34 927 674 015
                 </a>
-                <a href="https://wa.me/346XXXXXXXX" target="_blank" class="flex items-center gap-2 hover:text-amber-700 transition">
-                    <i class="fab fa-whatsapp"></i> 
-                    WhatsApp
+                <a href="https://wa.me/346XXXXXXXX" target="_blank" class="flex items-center gap-2 hover:text-amber-700">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
                 </a>
             </div>
             <div class="text-stone-500 text-xs">Pinofranqueado • Las Hurdes • Cáceres</div>
@@ -52,7 +51,7 @@
         </div>
     </section>
 
-    <!-- MODAL PROFESIONAL -->
+    <!-- MODAL DE RESERVA -->
     <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
         <div class="bg-white rounded-3xl w-full max-w-lg mx-4 p-8 max-h-[90vh] overflow-auto">
             <div class="flex justify-between mb-6">
@@ -65,7 +64,6 @@
                     <label class="block text-sm font-medium mb-2">Nombre completo</label>
                     <input id="nombre" type="text" required class="w-full p-4 border rounded-2xl">
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium mb-2">Email</label>
@@ -76,51 +74,17 @@
                         <input id="telefono" type="tel" required class="w-full p-4 border rounded-2xl">
                     </div>
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2">Fecha de llegada</label>
+                        <label class="block text-sm font-medium mb-2">Llegada</label>
                         <input id="checkin" type="date" required class="w-full p-4 border rounded-2xl">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">Fecha de salida</label>
+                        <label class="block text-sm font-medium mb-2">Salida</label>
                         <input id="checkout" type="date" required class="w-full p-4 border rounded-2xl">
                     </div>
                 </div>
-
-                <div class="grid grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Adultos</label>
-                        <select id="adultos" class="w-full p-4 border rounded-2xl">
-                            <option value="1">1</option>
-                            <option value="2" selected>2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Niños</label>
-                        <select id="ninos" class="w-full p-4 border rounded-2xl">
-                            <option value="0" selected>0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Mascotas</label>
-                        <select id="mascotas" class="w-full p-4 border rounded-2xl">
-                            <option value="0" selected>No</option>
-                            <option value="1">Sí</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium mb-2">Comentarios o preferencias</label>
-                    <textarea id="comentario" rows="3" class="w-full p-4 border rounded-2xl" placeholder="Ej: Habitación con jacuzzi..."></textarea>
-                </div>
-
-                <button type="submit" class="w-full py-5 bg-amber-800 text-white rounded-2xl font-semibold text-lg hover:bg-amber-900 transition">
+                <button type="submit" class="w-full py-5 bg-amber-800 text-white rounded-2xl font-semibold text-lg hover:bg-amber-900">
                     Enviar solicitud de reserva
                 </button>
             </form>
@@ -143,19 +107,36 @@
     </footer>
 
     <script>
-        function openModal() {
-            document.getElementById('modal').classList.remove('hidden');
-        }
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
+        const supabase = supabase.createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
+        );
 
-        document.getElementById('reservaForm').addEventListener('submit', function(e) {
+        document.getElementById('reservaForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            alert('✅ Reserva enviada correctamente. Te contactaremos pronto.');
-            closeModal();
-            this.reset();
+
+            const data = {
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                checkin: document.getElementById('checkin').value,
+                checkout: document.getElementById('checkout').value,
+                estado: 'Pendiente'
+            };
+
+            const { error } = await supabase.from('reservas').insert([data]);
+
+            if (error) {
+                alert('Error: ' + error.message);
+            } else {
+                alert('✅ Reserva enviada correctamente. Te contactaremos pronto.');
+                closeModal();
+                e.target.reset();
+            }
         });
+
+        function openModal() { document.getElementById('modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
     </script>
 </body>
 </html>
