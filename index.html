@@ -9,18 +9,20 @@
 </head>
 <body class="bg-stone-50">
 
-    <!-- BARRA SUPERIOR DE CONTACTO -->
-    <div class="bg-stone-800 text-white py-3 text-sm">
-        <div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center gap-6">
-                <a href="tel:+34927674015" class="flex items-center gap-2 hover:text-amber-400">
-                    <i class="fas fa-phone"></i> +34 927 674 015
+    <!-- BARRA SUPERIOR DE CONTACTO (blanca) -->
+    <div class="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap justify-between items-center gap-4 text-sm">
+            <div class="flex items-center gap-6 text-stone-600">
+                <a href="tel:+34927674015" class="flex items-center gap-2 hover:text-amber-700 transition">
+                    <i class="fas fa-phone"></i> 
+                    +34 927 674 015
                 </a>
-                <a href="https://wa.me/346XXXXXXXX" target="_blank" class="flex items-center gap-2 hover:text-amber-400">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
+                <a href="https://wa.me/346XXXXXXXX" target="_blank" class="flex items-center gap-2 hover:text-amber-700 transition">
+                    <i class="fab fa-whatsapp"></i> 
+                    WhatsApp
                 </a>
             </div>
-            <div class="text-amber-400 text-xs">Pinofranqueado • Las Hurdes • Cáceres</div>
+            <div class="text-stone-500 text-xs">Pinofranqueado • Las Hurdes • Cáceres</div>
         </div>
     </div>
 
@@ -50,7 +52,7 @@
         </div>
     </section>
 
-    <!-- MODAL PROFESIONAL (estilo Booking) -->
+    <!-- MODAL PROFESIONAL -->
     <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
         <div class="bg-white rounded-3xl w-full max-w-lg mx-4 p-8 max-h-[90vh] overflow-auto">
             <div class="flex justify-between mb-6">
@@ -115,7 +117,7 @@
 
                 <div>
                     <label class="block text-sm font-medium mb-2">Comentarios o preferencias</label>
-                    <textarea id="comentario" rows="3" class="w-full p-4 border rounded-2xl" placeholder="Ej: Habitación con jacuzzi, cena especial..."></textarea>
+                    <textarea id="comentario" rows="3" class="w-full p-4 border rounded-2xl" placeholder="Ej: Habitación con jacuzzi..."></textarea>
                 </div>
 
                 <button type="submit" class="w-full py-5 bg-amber-800 text-white rounded-2xl font-semibold text-lg hover:bg-amber-900 transition">
