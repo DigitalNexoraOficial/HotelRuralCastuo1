@@ -1,125 +1,417 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hotel Rural Castúo · Reserva y gestión</title>
-  <!-- Incluimos Supabase para poder guardar reservas -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    :root {
-      --verde: #333f28; --verde-osc: #232b1a; --terracota: #a3603c;
-      --crema: #f6f1e6; --crema-osc: #ece2cd; --texto: #3b352c;
-      --borde: rgba(35,30,22,.14); --sombra: 0 20px 45px -20px rgba(32,27,22,.35);
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hotel Rural Castúo · Pinofranqueado, Las Hurdes</title>
+<meta name="description" content="Hotel Rural Castúo, un refugio de piedra y castaños en Pinofranqueado, Las Hurdes, Extremadura. Reserva tu estancia entre sierras y ríos hurdanos." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --pizarra:#1E2420;
+    --pizarra-2:#2B332C;
+    --piedra:#EEE9DC;
+    --piedra-2:#E2DACA;
+    --musgo:#4B5A3E;
+    --musgo-2:#3B4830;
+    --cobre:#A8592C;
+    --cobre-2:#8E4A24;
+    --arcilla:#C48A72;
+    --tinta:#211F1A;
+    --tinta-suave:#5B594C;
+    --crema-suave:#FBF9F3;
+    --borde:rgba(30,28,22,.14);
+    --borde-claro:rgba(255,255,255,.16);
+    --sombra:0 30px 60px -30px rgba(20,18,14,.45);
+    --ease:cubic-bezier(.16,.8,.24,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--piedra);
+    color:var(--tinta);
+    font-family:'Manrope',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--cobre); color:var(--crema-suave);}
+  :focus-visible{outline:2px solid var(--cobre); outline-offset:3px;}
+
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-.01em;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:currentColor;
+    opacity:.6;
+  }
+  .container{max-width:1180px; margin:0 auto; padding:0 clamp(20px,4vw,40px);}
+  .btn{
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:14px 26px;
+    border-radius:6px;
+    font-family:'Manrope',sans-serif;
+    font-weight:600;
+    font-size:.95rem;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease), color .35s var(--ease);
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-cobre{background:var(--cobre); color:var(--crema-suave);}
+  .btn-cobre:hover{background:var(--cobre-2); box-shadow:0 14px 30px -12px rgba(168,89,44,.55);}
+  .btn-linea{border-color:var(--borde-claro); color:inherit;}
+  .btn-linea:hover{background:rgba(255,255,255,.08);}
+  .btn:disabled{opacity:.55; cursor:not-allowed; transform:none;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px clamp(20px,4vw,40px);
+    color:var(--crema-suave);
+    transition:padding .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .nav.scrolled{
+    padding:14px clamp(20px,4vw,40px);
+    background:rgba(30,36,32,.82);
+    backdrop-filter:blur(14px);
+    box-shadow:0 12px 30px -20px rgba(0,0,0,.5);
+  }
+  .nav__brand{
+    font-family:'Fraunces',serif;
+    font-size:1.15rem;
+    letter-spacing:.02em;
+  }
+  .nav__brand span{color:var(--arcilla);}
+  .nav__links{display:flex; align-items:center; gap:34px; font-size:.92rem;}
+  .nav__links a{position:relative; padding:4px 0;}
+  .nav__links a::after{
+    content:""; position:absolute; left:0; bottom:0; height:1px; width:0;
+    background:var(--arcilla); transition:width .3s var(--ease);
+  }
+  .nav__links a:hover::after{width:100%;}
+  .nav__toggle{display:none; background:none; border:none; color:var(--crema-suave); cursor:pointer; padding:6px;}
+  .nav__toggle svg{width:24px; height:24px;}
+
+  @media (max-width:840px){
+    .nav__links{
+      position:fixed; inset:0 0 auto auto; top:0; height:100vh; width:min(78vw,320px);
+      background:var(--pizarra); flex-direction:column; align-items:flex-start;
+      justify-content:center; gap:26px; padding:40px; font-size:1.1rem;
+      transform:translateX(100%); transition:transform .45s var(--ease);
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--crema); color: var(--texto); line-height: 1.7; }
-    .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
-    .btn { display: inline-flex; align-items: center; padding: 13px 22px; border-radius: 999px; font-weight: 600; cursor: pointer; border: none; transition: .25s; }
-    .btn-primary { background: var(--terracota); color: white; }
-    .btn:disabled { opacity: .6; cursor: not-allowed; }
-    .topbar { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; background: rgba(246,241,230,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--borde); }
-    .brand { font-weight: 800; color: var(--verde); text-transform: uppercase; }
-    .nav { display: flex; gap: 18px; }
-    .hero { padding: 70px 0; background: linear-gradient(120deg, rgba(0,0,0,.18), rgba(0,0,0,.38)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1800&q=80') center/cover; color: white; min-height: 82vh; display: flex; align-items: center; }
-    .hero-card { background: rgba(0,0,0,.35); padding: 36px; border-radius: 24px; max-width: 780px; }
-    .section { padding: 78px 0; }
-    .section.alt { background: var(--crema-osc); }
-    .section-title { font-size: 2.2rem; margin-bottom: 24px; color: var(--verde-osc); }
-    .grid { display: grid; gap: 22px; }
-    .grid-2 { grid-template-columns: repeat(2, 1fr); }
-    .card { background: white; border: 1px solid var(--borde); border-radius: 18px; padding: 24px; box-shadow: var(--sombra); }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-    input, select, textarea { padding: 11px; border: 1px solid var(--borde); border-radius: 10px; font: inherit; }
-    .full { grid-column: 1 / -1; }
-  </style>
+    .nav__links.open{transform:translateX(0);}
+    .nav__toggle{display:inline-flex;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:100vh;
+    display:flex; align-items:flex-end;
+    background:
+      linear-gradient(180deg, rgba(20,24,20,.35) 0%, rgba(18,22,18,.55) 55%, var(--pizarra) 100%),
+      url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1800&q=80') center/cover;
+    color:var(--crema-suave);
+    padding-top:120px;
+    overflow:hidden;
+  }
+  .hero__inner{position:relative; z-index:2; padding-bottom:110px;}
+  .hero .eyebrow{color:var(--arcilla); margin-bottom:22px;}
+  .hero h1{
+    font-size:clamp(2.6rem, 3.4vw + 1.4rem, 5rem);
+    max-width:14ch;
+    font-weight:500;
+    line-height:1.05;
+  }
+  .hero p{
+    max-width:46ch; margin-top:22px; font-size:1.08rem; color:rgba(251,249,243,.82);
+  }
+  .hero__actions{display:flex; flex-wrap:wrap; gap:16px; margin-top:36px;}
+  .hero__ridge{
+    position:absolute; left:0; right:0; bottom:-1px; z-index:1;
+    width:100%; height:auto; display:block;
+    color:var(--piedra);
+  }
+  .hero__scroll{
+    position:absolute; right:clamp(20px,4vw,40px); bottom:130px; z-index:2;
+    writing-mode:vertical-rl; font-family:'IBM Plex Mono',monospace; font-size:.7rem;
+    letter-spacing:.2em; text-transform:uppercase; color:rgba(251,249,243,.55);
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero__scroll::after{content:""; width:1px; height:46px; background:currentColor;}
+  @media (max-width:840px){ .hero__scroll{display:none;} }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s var(--ease), transform .8s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- INTRO ---------- */
+  .intro{padding:min(16vw,150px) 0 100px;}
+  .intro__grid{display:grid; grid-template-columns:1.1fr .9fr; gap:70px; align-items:start;}
+  .intro h2{font-size:clamp(1.9rem,2vw + 1rem,2.7rem); margin-top:18px; max-width:16ch;}
+  .intro__text{margin-top:24px; color:var(--tinta-suave); font-size:1.02rem; max-width:52ch;}
+  .intro__panel{
+    background:var(--pizarra); color:var(--crema-suave);
+    border-radius:14px; padding:34px; position:relative; overflow:hidden;
+  }
+  .intro__panel::before{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(circle at 85% 10%, rgba(196,138,114,.25), transparent 55%);
+  }
+  .intro__panel-row{position:relative; display:flex; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--borde-claro); font-family:'IBM Plex Mono',monospace; font-size:.85rem;}
+  .intro__panel-row:last-child{border-bottom:none;}
+  .intro__panel-row span:first-child{color:rgba(251,249,243,.55);}
+  @media (max-width:900px){ .intro__grid{grid-template-columns:1fr; gap:40px;} }
+
+  /* ---------- SECTION shared ---------- */
+  .section{padding:96px 0;}
+  .section--alt{background:var(--piedra-2);}
+  .section__head{max-width:640px; margin-bottom:56px;}
+  .section__head h2{font-size:clamp(1.9rem,2vw + 1rem,2.6rem); margin-top:16px;}
+  .section__head p{margin-top:16px; color:var(--tinta-suave);}
+
+  /* ---------- HABITACIONES ---------- */
+  .rooms{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .room{
+    background:var(--crema-suave); border-radius:14px; overflow:hidden;
+    border:1px solid var(--borde); box-shadow:var(--sombra);
+    transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+    display:flex; flex-direction:column;
+  }
+  .room:hover{transform:translateY(-6px);}
+  .room__swatch{
+    height:210px; position:relative;
+    display:flex; align-items:flex-end; padding:20px;
+  }
+  .room__swatch svg{width:34px; height:34px; color:rgba(255,255,255,.92);}
+  .room__swatch.s1{background:linear-gradient(155deg,#39473A,#1E2420 78%);}
+  .room__swatch.s2{background:linear-gradient(155deg,#8E4A24,#3A2416 82%);}
+  .room__swatch.s3{background:linear-gradient(155deg,#5B6B57,#232C22 80%);}
+  .room__swatch::after{
+    content:""; position:absolute; inset:0; opacity:.5; mix-blend-mode:overlay;
+    background-image:radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px);
+    background-size:5px 5px;
+  }
+  .room__body{padding:24px 24px 26px; display:flex; flex-direction:column; gap:12px; flex:1;}
+  .room__body h3{font-size:1.3rem;}
+  .room__body p{margin:0; color:var(--tinta-suave); font-size:.94rem;}
+  .room__tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:auto; padding-top:14px;}
+  .room__tags span{
+    font-family:'IBM Plex Mono',monospace; font-size:.68rem; letter-spacing:.05em;
+    text-transform:uppercase; padding:5px 10px; border-radius:5px;
+    background:var(--piedra-2); color:var(--tinta-suave);
+  }
+  .room__price{font-family:'IBM Plex Mono',monospace; font-size:.85rem; color:var(--cobre-2);}
+  @media (max-width:900px){ .rooms{grid-template-columns:1fr; } }
+
+  /* ---------- ENTORNO ---------- */
+  .entorno-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--borde); border:1px solid var(--borde); border-radius:14px; overflow:hidden;}
+  .entorno-item{background:var(--crema-suave); padding:30px 26px; display:flex; flex-direction:column; gap:14px;}
+  .entorno-item svg{width:28px; height:28px; color:var(--musgo);}
+  .entorno-item h3{font-size:1.05rem; font-weight:600; font-family:'Manrope',sans-serif;}
+  .entorno-item p{margin:0; font-size:.9rem; color:var(--tinta-suave);}
+  @media (max-width:900px){ .entorno-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .entorno-grid{grid-template-columns:1fr;} }
+
+  /* ---------- RESERVAR ---------- */
+  .reservar-grid{display:grid; grid-template-columns:.85fr 1.15fr; gap:60px; align-items:start;}
+  .reservar-info{position:sticky; top:120px;}
+  .reservar-info ul{list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:16px;}
+  .reservar-info li{display:flex; gap:12px; font-size:.95rem; color:var(--tinta-suave);}
+  .reservar-info li svg{width:18px; height:18px; flex-shrink:0; margin-top:2px; color:var(--cobre);}
+  .form-card{
+    background:var(--crema-suave); border-radius:16px; padding:clamp(24px,3vw,40px);
+    border:1px solid var(--borde); box-shadow:var(--sombra);
+  }
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .field{display:flex; flex-direction:column; gap:8px;}
+  .field.full{grid-column:1/-1;}
+  .field label{
+    font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--tinta-suave);
+  }
+  .field input, .field textarea{
+    padding:13px 14px; border:1px solid var(--borde); border-radius:8px;
+    font:inherit; font-size:.95rem; background:var(--piedra); color:var(--tinta);
+    transition:border-color .25s, box-shadow .25s;
+  }
+  .field input:focus, .field textarea:focus{
+    border-color:var(--musgo); box-shadow:0 0 0 3px rgba(75,90,62,.15); outline:none;
+  }
+  .field textarea{resize:vertical; min-height:90px;}
+  .form-card button[type="submit"]{margin-top:24px; width:100%; justify-content:center;}
+  @media (max-width:900px){
+    .reservar-grid{grid-template-columns:1fr;}
+    .reservar-info{position:static;}
+    .form-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer{background:var(--pizarra); color:rgba(251,249,243,.78); position:relative;}
+  .footer__ridge{display:block; width:100%; color:var(--piedra-2);}
+  .footer__inner{padding:70px 0 40px;}
+  .footer__grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:50px;}
+  .footer__brand{font-family:'Fraunces',serif; font-size:1.3rem; color:var(--crema-suave);}
+  .footer__brand span{color:var(--arcilla);}
+  .footer__desc{margin-top:16px; font-size:.92rem; max-width:34ch; color:rgba(251,249,243,.6);}
+  .footer h4{
+    font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.14em;
+    text-transform:uppercase; color:rgba(251,249,243,.5); margin-bottom:18px; font-weight:500;
+  }
+  .footer ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; font-size:.92rem;}
+  .footer ul a:hover{color:var(--arcilla);}
+  .footer__bottom{
+    margin-top:60px; padding-top:24px; border-top:1px solid var(--borde-claro);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.04em; color:rgba(251,249,243,.45);
+  }
+  @media (max-width:760px){ .footer__grid{grid-template-columns:1fr; gap:34px;} }
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#inicio">Hotel Rural Castúo</a>
-    <nav class="nav">
-      <a href="#inicio">Inicio</a>
-      <a href="#habitaciones">Habitaciones</a>
-      <a href="#reservar">Reservar</a>
-    </nav>
-  </header>
 
-  <section id="inicio" class="hero">
-    <div class="container">
-      <div class="hero-card">
-        <h1>Un refugio de piedra y calma.</h1>
-        <p>Desconecta en el corazón de Las Hurdes.</p>
-        <a class="btn btn-primary" href="#reservar">Reservar ahora</a>
+<header class="nav" id="nav">
+  <a href="#inicio" class="nav__brand">Castúo<span>.</span></a>
+  <nav class="nav__links" id="navLinks">
+    <a href="#sobre">El hotel</a>
+    <a href="#habitaciones">Habitaciones</a>
+    <a href="#entorno">Entorno</a>
+    <a href="#reservar" class="btn btn-linea" style="padding:10px 20px;">Reservar</a>
+  </nav>
+  <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="container hero__inner">
+    <p class="eyebrow">Pinofranqueado · Las Hurdes · Cáceres</p>
+    <h1>Donde la piedra guarda el silencio de la sierra.</h1>
+    <p>Un hotel rural entre castañares y ríos hurdanos, a 440&nbsp;metros de altitud, en el corazón de Las Hurdes Bajas.</p>
+    <div class="hero__actions">
+      <a href="#reservar" class="btn btn-cobre">Reservar estancia</a>
+      <a href="#habitaciones" class="btn btn-linea">Ver habitaciones</a>
+    </div>
+  </div>
+  <div class="hero__scroll">Desliza</div>
+  <svg class="hero__ridge" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,140 L0,92 L60,70 L130,100 L210,48 L280,86 L360,30 L430,78 L520,20 L610,74 L690,42 L760,88 L850,36 L930,82 L1020,54 L1100,96 L1200,60 L1200,140 Z"/>
+  </svg>
+</section>
+
+<section class="intro" id="sobre">
+  <div class="container intro__grid">
+    <div class="reveal">
+      <p class="eyebrow" style="color:var(--cobre-2);">El hotel</p>
+      <h2>Una casa de pizarra, pensada para quedarse en silencio.</h2>
+      <p class="intro__text">Castúo ocupa una antigua vivienda hurdana reconstruida con la pizarra que aflora en toda la comarca, la misma que forma las alquerías dispersas junto a los ríos Esperabán y de los Ángeles. Hemos conservado los muros de piedra y la estructura de castaño, y hemos añadido lo que una casa de sierra necesitaba: luz, calma y un lugar donde el paisaje entre por la ventana.</p>
+      <p class="intro__text">Once alquerías y un municipio cabecera forman Pinofranqueado; nosotros ocupamos un rincón tranquilo de esa Hurdes Baja, a 115&nbsp;km de Cáceres capital.</p>
+    </div>
+    <div class="reveal intro__panel">
+      <div class="intro__panel-row"><span>Altitud</span><span>440 m</span></div>
+      <div class="intro__panel-row"><span>Coordenadas</span><span>40°18′N&nbsp;6°28′O</span></div>
+      <div class="intro__panel-row"><span>Comarca</span><span>Las Hurdes Bajas</span></div>
+      <div class="intro__panel-row"><span>A Cáceres</span><span>115 km</span></div>
+      <div class="intro__panel-row"><span>Material</span><span>Pizarra y castaño</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="habitaciones">
+  <div class="container">
+    <div class="section__head reveal">
+      <p class="eyebrow" style="color:var(--cobre-2);">Habitaciones</p>
+      <h2>Tres formas de habitar la piedra</h2>
+      <p>Cada habitación toma su nombre y su carácter de un elemento del paisaje hurdano: la roca, el castañar y el agua de los chorros.</p>
+    </div>
+    <div class="rooms">
+      <div class="room reveal">
+        <div class="room__swatch s1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 19l5-9 4 6 3-4 6 7z"/></svg>
+        </div>
+        <div class="room__body">
+          <h3>Habitación Pizarra</h3>
+          <p>Muros de piedra vista, suelo de castaño y una ventana estrecha orientada a la sierra.</p>
+          <div class="room__price">desde 95 € / noche</div>
+          <div class="room__tags"><span>18 m²</span><span>Cama doble</span><span>Vistas sierra</span></div>
+        </div>
+      </div>
+      <div class="room reveal">
+        <div class="room__swatch s2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9z"/></svg>
+        </div>
+        <div class="room__body">
+          <h3>Habitación Castañar</h3>
+          <p>La más amplia, con estancia independiente y balcón entre las copas de los castaños centenarios.</p>
+          <div class="room__price">desde 130 € / noche</div>
+          <div class="room__tags"><span>26 m²</span><span>Hasta 3 personas</span><span>Balcón</span></div>
+        </div>
+      </div>
+      <div class="room reveal">
+        <div class="room__swatch s3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 15c2-3 4 2 6-1s4 2 6-1s4 2 4-1"/></svg>
+        </div>
+        <div class="room__body">
+          <h3>Suite Chorro</h3>
+          <p>La suite del hotel, con bañera de piedra y el sonido del río de fondo al anochecer.</p>
+          <div class="room__price">desde 165 € / noche</div>
+          <div class="room__tags"><span>32 m²</span><span>Bañera de piedra</span><span>Terraza</span></div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="habitaciones" class="section alt">
-    <div class="container">
-      <h2 class="section-title">Habitaciones</h2>
-      <div class="grid grid-2">
-        <div class="card"><h3>Habitación de piedra</h3><p>Atmósfera íntima y acogedora.</p></div>
-        <div class="card"><h3>Habitación familiar</h3><p>Ideal para estancias en grupo.</p></div>
-      </div>
+<section class="section" id="entorno">
+  <div class="container">
+    <div class="section__head reveal">
+      <p class="eyebrow" style="color:var(--cobre-2);">Entorno</p>
+      <h2>Las Hurdes, a pie de puerta</h2>
+      <p>Todo lo que rodea a Castúo forma parte de la estancia: senderos entre alquerías, chorros de agua fría y oficios que se conservan igual desde hace generaciones.</p>
     </div>
-  </section>
-
-  <section id="reservar" class="section">
-    <div class="container">
-      <div class="card">
-        <h2 class="section-title">Solicita tu reserva</h2>
-        <form id="formReserva">
-          <div class="form-grid">
-            <label>Nombre<input id="nombre" required /></label>
-            <label>Email<input id="email" type="email" required /></label>
-            <label>Fecha<input id="fecha" type="date" required /></label>
-            <label>Personas<input id="personas" type="number" value="2" min="1" /></label>
-            <label class="full">Mensaje<textarea id="mensaje"></textarea></label>
-          </div>
-          <br>
-          <button class="btn btn-primary" type="submit" id="btnEnviar">Enviar Reserva</button>
-        </form>
+    <div class="entorno-grid reveal">
+      <div class="entorno-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 20l6-11 4 7 2.5-4L21 20z"/></svg>
+        <h3>Senderos y alquerías</h3>
+        <p>Rutas a pie entre las once alquerías del municipio, sobre caminos de pastores.</p>
       </div>
-    </div>
-  </section>
-
-  <script>
-    // OJO: usamos "supabaseClient" como nombre propio, NUNCA "supabase",
-    // porque "supabase" ya es el objeto global que trae el script del CDN.
-    const supabaseClient = supabase.createClient(
-      'https://sushapqkyixbhpjemrbk.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
-    );
-
-    const formReserva = document.getElementById('formReserva');
-    const btnEnviar = document.getElementById('btnEnviar');
-
-    formReserva.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      btnEnviar.disabled = true;
-      btnEnviar.textContent = 'Enviando...';
-
-      const { error } = await supabaseClient.from('reservas').insert([{
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('email').value,
-        fecha: document.getElementById('fecha').value,
-        personas: document.getElementById('personas').value,
-        mensaje: document.getElementById('mensaje').value,
-        estado: 'Nueva'
-      }]);
-
-      if (error) {
-        alert('Error al reservar: ' + error.message);
-      } else {
-        alert('¡Reserva enviada con éxito!');
-        formReserva.reset();
-      }
-
-      btnEnviar.disabled = false;
-      btnEnviar.textContent = 'Enviar Reserva';
-    });
-  </script>
-</body>
-</html>
+      <div class="entorno-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 12c2-4 4-6 6-9 2 3 4 5 6 9a6 6 0 1 1-12 0z"/></svg>
+        <h3>Chorros y piscinas naturales</h3>
+        <p>Baños en el río, entre pozas de pizarra, a pocos minutos del hotel.</p>
+      </div>
+      <div class="entorno-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/></svg>
+        <h3>Aula de artesanía</h3>
+        <p>Bordado, piedra, mimbre y madera trabajados a mano por artesanos del pueblo.</p>
+      </div>
+      <div class="entorno-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3v6M8 9h8l1 4a5 5 0 0 1-10 0z"/><path d="M9 21h6"/></svg>
+        <h3>Mesa hurdana</h3>
+        <p>Miel, mantecados, perrunillas y floretas, la repostería propia de la comarca.</p>
+      </div>
+    </d
