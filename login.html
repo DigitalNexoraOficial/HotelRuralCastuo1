@@ -2,35 +2,60 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Acceso Admin - Hotel Castúo</title>
     <!-- Cargamos Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 100px; background: #f6f1e6; }
         .login-card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px; }
-        input { width: 100%; margin-bottom: 1rem; padding: 8px; }
+        input { width: 100%; margin-bottom: 1rem; padding: 8px; box-sizing: border-box; }
         button { width: 100%; padding: 10px; background: #4a5d23; color: white; border: none; cursor: pointer; }
+        button:disabled { opacity: .6; cursor: not-allowed; }
+        .error { color: #b3261e; font-size: .9rem; margin-top: -.5rem; margin-bottom: 1rem; min-height: 1.1rem; }
     </style>
 </head>
 <body>
     <div class="login-card">
         <h2>Acceso Propietarios</h2>
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Contraseña">
-        <button onclick="login()">Entrar</button>
+        <form id="formLogin">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <div class="error" id="errorMsg"></div>
+            <button type="submit" id="btnLogin">Entrar</button>
+        </form>
     </div>
 
     <script>
-        const supabase = supabase.createClient('sb_publishable_TSV_WRbLMBcXIxS9q7bx1Q_ego465L1', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c');
+        // OJO: usamos "supabaseClient" como nombre propio, NUNCA "supabase",
+        // porque "supabase" ya es el objeto global que trae el script del CDN.
+        const supabaseClient = supabase.createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
+        );
 
-        async function login() {
+        const formLogin = document.getElementById('formLogin');
+        const btnLogin = document.getElementById('btnLogin');
+        const errorMsg = document.getElementById('errorMsg');
+
+        formLogin.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMsg.textContent = '';
+            btnLogin.disabled = true;
+            btnLogin.textContent = 'Entrando...';
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            
-            if (error) alert(error.message);
-            else window.location.href = 'admin.html';
-        }
+            const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                errorMsg.textContent = error.message;
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'Entrar';
+            } else {
+                window.location.href = 'admin.html';
+            }
+        });
     </script>
 </body>
 </html>
