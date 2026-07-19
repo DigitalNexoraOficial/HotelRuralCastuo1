@@ -2,31 +2,36 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Rural Castúo</title>
-<link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Hotel Rural Castúo | Lujo en Las Hurdes</title>
 </head>
 <body>
-    <nav><h1>Hotel Rural Castúo</h1><button onclick="showSection('admin')">Admin</button></nav>
+    <nav>
+        <h1>Hotel Rural Castúo</h1>
+        <button onclick="window.location.href='login.html'">Admin</button>
+    </nav>
 
-    <main id="public">
-        <section><h2>Bienvenidos a Las Hurdes</h2><p>Disfruta del río Los Ángeles.</p></section>
+    <main>
+        <section class="hero">
+            <h2>Bienvenidos al corazón de Las Hurdes</h2>
+            <button class="btn-reserva" onclick="toggleModal()">Reservar Habitación</button>
+        </section>
     </main>
 
-    <main id="admin" class="hidden">
-        <h2>Dashboard</h2>
-        <form id="clientForm">
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="text" id="habitacion" placeholder="Habitación">
-            <button type="submit">Registrar</button>
-        </form>
-        <table id="clientTable">
-            <thead><tr><th>Nombre</th><th>Hab.</th><th>Acciones</th></tr></thead>
-            <tbody></tbody>
-        </table>
-    </main>
+    <!-- Modal de Reserva -->
+    <div id="reservaModal" class="modal hidden">
+        <div class="modal-content">
+            <span onclick="toggleModal()" style="cursor:pointer">X</span>
+            <h3>Solicitud de Reserva</h3>
+            <input type="text" placeholder="Tu Nombre">
+            <input type="date">
+            <button>Confirmar Reserva</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Hotel Rural Castúo - Pinofranqueado. Todos los derechos reservados.</p>
+    </footer>
     <script src="app.js"></script>
 </body>
 </html>
