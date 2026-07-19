@@ -1,37 +1,26 @@
-const supabase = supabase.createClient('TU_SUPABASE_URL', 'TU_SUPABASE_ANON_KEY');
+const supabase = supabase.createClient('TU_URL', 'TU_KEY');
 
-// Mostrar secciones
-function showSection(id) {
-    document.getElementById('public').classList.toggle('hidden', id === 'admin');
-    document.getElementById('admin').classList.toggle('hidden', id !== 'admin');
-    if (id === 'admin') loadClients();
+// Lógica de Login
+if (document.getElementById('loginForm')) {
+    document.getElementById('loginForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('password').value;
+        const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+        if (!error) window.location.href = 'admin.html';
+        else alert('Error de acceso');
+    };
 }
 
-// CRUD: Crear
-document.getElementById('clientForm').onsubmit = async (e) => {
-    e.preventDefault();
-    await supabase.from('clientes').insert([{ 
-        nombre: document.getElementById('nombre').value, 
-        habitacion: document.getElementById('habitacion').value 
-    }]);
-    loadClients();
-};
-
-// CRUD: Leer
-async function loadClients() {
-    const { data } = await supabase.from('clientes').select('*');
-    const tbody = document.querySelector('#clientTable tbody');
-    tbody.innerHTML = data.map(c => `<tr>
-        <td>${c.nombre}</td><td>${c.habitacion}</td>
-        <td><button onclick="deleteClient(${c.id})">Eliminar</button></td>
-    </tr>`).join('');
+// Protección de rutas (en admin.html)
+if (window.location.pathname.includes('admin.html')) {
+    supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) window.location.href = 'login.html';
+        else loadClients(); // Tu función de carga de tabla anterior
+    });
 }
 
-// CRUD: Eliminar
-async function deleteClient(id) {
-    await supabase.from('clientes').delete().eq('id', id);
-    loadClients();
+async function logout() {
+    await supabase.auth.signOut();
+    window.location.href = 'login.html';
 }
-
-// Inicializar
-loadClients();
