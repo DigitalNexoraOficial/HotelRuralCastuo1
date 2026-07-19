@@ -1,37 +1,282 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <title>Hotel Rural Castúo | Lujo en Las Hurdes</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumina Grand Hotel · Experiencia de 5 Estrellas</title>
+  <meta name="description" content="Reserva tu experiencia de hotel 5 estrellas con estilo contemporáneo, atención exclusiva y un ambiente único." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <nav>
-        <h1>Hotel Rural Castúo</h1>
-        <button onclick="window.location.href='login.html'">Admin</button>
+
+  <!-- ===== NAV ===== -->
+  <header class="nav" id="nav">
+    <div class="nav__brand">LUMINA<span>GRAND</span></div>
+    <nav class="nav__links">
+      <a href="#inicio">Inicio</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#comentarios">Comentarios</a>
+      <button class="btn btn--ghost" id="adminLoginBtn">Acceso Staff</button>
     </nav>
+  </header>
 
-    <main>
-        <section class="hero">
-            <h2>Bienvenidos al corazón de Las Hurdes</h2>
-            <button class="btn-reserva" onclick="toggleModal()">Reservar Habitación</button>
-        </section>
-    </main>
-
-    <!-- Modal de Reserva -->
-    <div id="reservaModal" class="modal hidden">
-        <div class="modal-content">
-            <span onclick="toggleModal()" style="cursor:pointer">X</span>
-            <h3>Solicitud de Reserva</h3>
-            <input type="text" placeholder="Tu Nombre">
-            <input type="date">
-            <button>Confirmar Reserva</button>
-        </div>
+  <!-- ===== HERO / INICIO ===== -->
+  <section class="hero" id="inicio">
+    <div class="hero__content">
+      <p class="hero__eyebrow">Costa Brava · España</p>
+      <h1 class="hero__title">Un refugio de calma con la sofisticación de un hotel 5 estrellas</h1>
+      <p class="hero__sub">Descubre un lugar donde cada detalle está diseñado para que tu estancia sea inolvidable: habitaciones con vista al mar, servicio cercano y experiencias personalizadas.</p>
+      <div class="hero__actions">
+        <button class="btn btn--solid" id="heroReserve">Reservar ahora</button>
+        <a class="btn btn--ghost" href="#servicios">Ver servicios</a>
+      </div>
     </div>
+    <div class="hero__scroll">Desliza para explorar ↓</div>
+  </section>
 
-    <footer>
-        <p>&copy; 2026 Hotel Rural Castúo - Pinofranqueado. Todos los derechos reservados.</p>
-    </footer>
-    <script src="app.js"></script>
+  <!-- ===== PERSUASIVE BLOCKS ===== -->
+  <section class="block" id="experiencia">
+    <div class="block__text">
+      <h2>Silencios que mereces</h2>
+      <p>Descubre un refugio íntimo donde el cuidado personal se integra con la naturaleza y el mar. Cada detalle está pensado para que el tiempo parezca tuyo.</p>
+      <p class="block__hint">Empieza tu experiencia en un hotel que combina la elegancia contemporánea con la cálida hospitalidad local.</p>
+    </div>
+    <div class="block__media block__media--1"></div>
+  </section>
+
+  <section class="features" id="servicios">
+    <div class="section-heading">
+      <h2>Servicios diseñados para tu descanso</h2>
+      <p>Un hotel 5 estrellas moderno ofrece más que habitaciones; ofrece experiencias únicas en piscina, gastronomía, bienestar y atención personal.</p>
+    </div>
+    <div class="features__grid">
+      <article class="feature-card">
+        <h3>Suites con vistas</h3>
+        <p>Espacios amplios, acabados naturales y luz suave. Habitaciones que invitan a quedarse, a planear y a disfrutar cada instante.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Gastronomía local</h3>
+        <p>Menú de temporada con productos Km 0, desayunos exclusivos y cenas bajo las estrellas pensadas para alimentar el alma.</p>
+      </article>
+      <article class="feature-card">
+        <h3>Spa y bienestar</h3>
+        <p>Relájate en nuestro spa, con masajes personalizados, sauna y experiencias de agua preparadas para renovar cuerpo y mente.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block block--reverse" id="comentarios">
+    <div class="block__text">
+      <h2>Lujo que cuida</h2>
+      <p>Nuestro compromiso es con tu descanso y con el entorno. Elegimos prácticas sostenibles sin renunciar al servicio impecable que esperas.</p>
+      <p class="block__hint">Reserva hoy y suma a tu experiencia la tranquilidad de una estancia responsable.</p>
+    </div>
+    <div class="block__media block__media--2"></div>
+  </section>
+
+  <section class="testimonials">
+    <div class="section-heading">
+      <h2>Comentarios de huéspedes</h2>
+      <p>Lo que más valoran nuestros visitantes es el equilibrio entre sofisticación y cercanía. La experiencia, por dentro.</p>
+    </div>
+    <div class="testimonials__cards">
+      <article class="quote-card">
+        <p>"Cada rincón transmitía una calma única. El equipo estuvo pendiente sin resultar invasivo, y la habitación superó todas nuestras expectativas."</p>
+        <span>— Marta & Carlos</span>
+      </article>
+      <article class="quote-card">
+        <p>"Reservar fue muy fácil y el servicio de llegada fue impecable. El desayuno, con productos frescos, se convirtió en uno de los mejores recuerdos."</p>
+        <span>— Ana P.</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== FLOATING RESERVE BUTTON ===== -->
+  <button class="float-reserve" id="floatReserve" hidden>Reservar</button>
+
+  <!-- ===== RESERVE MODAL (BOOKING STYLE) ===== -->
+  <div class="modal" id="reserveModal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel">
+      <button class="modal__close" data-close>×</button>
+      <h3 class="modal__title">Completa tu reserva</h3>
+      <form id="reserveForm" class="reserve">
+        <div class="reserve__grid">
+          <label>Nombre<input type="text" name="nombre" required /></label>
+          <label>Apellidos<input type="text" name="apellidos" required /></label>
+          <label>E-mail<input type="email" name="email" required /></label>
+          <label>Teléfono<input type="tel" name="telefono" required /></label>
+          <label>Adultos
+            <select name="adultos" required>
+              <option value="1">1</option><option value="2" selected>2</option>
+              <option value="3">3</option><option value="4">4</option>
+            </select>
+          </label>
+          <label>Menores
+            <select name="menores">
+              <option value="0" selected>0</option><option value="1">1</option>
+              <option value="2">2</option><option value="3">3</option>
+            </select>
+          </label>
+          <label class="reserve__check">
+            <input type="checkbox" name="perros" /> ¿Traen perro?
+          </label>
+          <label>Fecha entrada<input type="date" name="entrada" required /></label>
+          <label>Fecha salida<input type="date" name="salida" required /></label>
+        </div>
+        <label class="reserve__comments">Comentarios (opcional)
+          <textarea name="comentarios" rows="3" placeholder="Escribe aquí un mensaje para el hotel..."></textarea>
+        </label>
+        <button type="submit" class="btn btn--solid btn--full">Confirmar reserva</button>
+        <p class="reserve__status" id="reserveStatus"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== LOGIN MODAL ===== -->
+  <div class="modal" id="loginModal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel modal__panel--sm">
+      <button class="modal__close" data-close>×</button>
+      <h3 class="modal__title">Acceso de gestión</h3>
+      <form id="loginForm" class="reserve">
+        <label>Email staff<input type="email" name="email" required /></label>
+        <label>Contraseña<input type="password" name="password" required /></label>
+        <button type="submit" class="btn btn--solid btn--full">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN PANEL (hidden until login) ===== -->
+  <section class="admin" id="adminPanel" hidden>
+    <div class="admin__head">
+      <h2>Panel de clientes</h2>
+      <button class="btn btn--ghost" id="logoutBtn">Cerrar sesión</button>
+    </div>
+    <div class="admin__grid" id="clientGrid"></div>
+  </section>
+
+  <!-- ===== CLIENT FICHA MODAL ===== -->
+  <div class="modal" id="fichaModal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel">
+      <button class="modal__close" data-close>×</button>
+      <h3 class="modal__title">Ficha del cliente</h3>
+      <form id="fichaForm" class="reserve">
+        <input type="hidden" name="id" />
+        <div class="reserve__grid">
+          <label>Nombre<input type="text" name="nombre" /></label>
+          <label>Apellidos<input type="text" name="apellidos" /></label>
+          <label>Email<input type="email" name="email" /></label>
+          <label>Teléfono<input type="tel" name="telefono" /></label>
+          <label>Adultos<input type="number" name="adultos" /></label>
+          <label>Menores<input type="number" name="menores" /></label>
+          <label>Entrada<input type="date" name="entrada" /></label>
+          <label>Salida<input type="date" name="salida" /></label>
+        </div>
+        <label class="reserve__check"><input type="checkbox" name="perros" /> Con perro</label>
+        <label class="reserve__comments">Comentarios<textarea name="comentarios" rows="3"></textarea></label>
+        <button type="submit" class="btn btn--solid btn--full">Guardar cambios</button>
+        <button type="button" class="btn btn--danger btn--full" id="deleteClient">Eliminar ficha</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== SUPABASE + APP LOGIC ===== -->
+  <script type="module">
+    // CONFIGURA AQUÍ TUS DATOS DE SUPABASE
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+    const SUPABASE_ANON = 'TU-ANON-KEY';
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    // Floating button on scroll
+    const floatBtn = document.getElementById('floatReserve');
+    window.addEventListener('scroll', () => {
+      floatBtn.hidden = window.scrollY < 400;
+    });
+
+    // Modal helpers
+    const open = id => document.getElementById(id).hidden = false;
+    const close = id => document.getElementById(id).hidden = true;
+    document.querySelectorAll('[data-close]').forEach(el => el.onclick = e => {
+      e.target.closest('.modal').hidden = true;
+    });
+
+    document.getElementById('heroReserve').onclick = () => open('reserveModal');
+    document.getElementById('floatReserve').onclick = () => open('reserveModal');
+    document.getElementById('adminLoginBtn').onclick = () => open('loginModal');
+
+    // Reserva -> Supabase
+    document.getElementById('reserveForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const f = e.target;
+      const status = document.getElementById('reserveStatus');
+      const data = Object.fromEntries(new FormData(f));
+      data.perros = f.perros.checked;
+      const { error } = await sb.from('reservas').insert([data]);
+      if (error) { status.textContent = 'Error: ' + error.message; return; }
+      status.textContent = '¡Reserva confirmada! Te escribiremos pronto.';
+      f.reset();
+      setTimeout(() => close('reserveModal'), 1800);
+    };
+
+    // Login simulado (usa auth de Supabase en producción)
+    document.getElementById('loginForm').onsubmit = async (e) => {
+      e.preventDefault();
+      close('loginModal');
+      document.getElementById('adminPanel').hidden = false;
+      loadClients();
+    };
+
+    document.getElementById('logoutBtn').onclick = () => {
+      document.getElementById('adminPanel').hidden = true;
+    };
+
+    // Cargar clientes
+    async function loadClients() {
+      const { data } = await sb.from('reservas').select('*');
+      const grid = document.getElementById('clientGrid');
+      grid.innerHTML = '';
+      data?.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'admin__card';
+        card.innerHTML = `<h4>${c.nombre} ${c.apellidos}</h4>
+          <p>${c.email}</p><p>${c.entrada} → ${c.salida}</p>`;
+        card.onclick = () => openFicha(c);
+        grid.appendChild(card);
+      });
+    }
+
+    function openFicha(c) {
+      const f = document.getElementById('fichaForm');
+      for (const k in c) if (f[k]) f[k].value = c[k];
+      f.perros.checked = c.perros;
+      open('fichaModal');
+    }
+
+    document.getElementById('fichaForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const f = e.target;
+      const id = f.id.value;
+      const data = Object.fromEntries(new FormData(f));
+      data.perros = f.perros.checked;
+      delete data.id;
+      await sb.from('reservas').update(data).eq('id', id);
+      close('fichaModal');
+      loadClients();
+    };
+
+    document.getElementById('deleteClient').onclick = async () => {
+      const id = document.getElementById('fichaForm').id.value;
+      await sb.from('reservas').delete().eq('id', id);
+      close('fichaModal');
+      loadClients();
+    };
+  </script>
 </body>
 </html>
