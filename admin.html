@@ -1,97 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Admin - Hotel Castúo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-stone-100">
-    <div class="max-w-7xl mx-auto p-6">
-        <div class="flex justify-between mb-8">
-            <h1 class="text-4xl font-bold">Panel de Administración</h1>
-            <a href="index.html" class="text-amber-700 hover:underline">← Volver a la web</a>
-        </div>
-
-        <div class="bg-white rounded-3xl shadow p-8">
-            <h2 class="text-2xl font-semibold mb-6">Reservas</h2>
-            <div id="listaReservas" class="space-y-4"></div>
-        </div>
-    </div>
-
-    <!-- Ficha detallada -->
-    <div id="fichaModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-        <div class="bg-white rounded-3xl w-full max-w-md mx-4 p-8">
-            <div class="flex justify-between mb-6">
-                <h3 class="text-2xl font-bold" id="fichaNombre"></h3>
-                <button onclick="cerrarFicha()" class="text-3xl">×</button>
-            </div>
-            <div id="fichaContenido" class="space-y-4"></div>
-        </div>
-    </div>
-
-    <script>
-        const supabase = supabase.createClient(
-            'https://sushapqkyixbhpjemrbk.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
-        );
-
-        async function cargarReservas() {
-            const { data, error } = await supabase.from('reservas').select('*').order('created_at', { ascending: false });
-
-            const container = document.getElementById('listaReservas');
-            container.innerHTML = '';
-
-            if (error) {
-                container.innerHTML = `<p class="text-red-500">Error: ${error.message}<br><small>Revisa que la tabla 'reservas' exista y RLS esté desactivado para pruebas.</small></p>`;
-                return;
-            }
-
-            if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-center py-12 text-stone-500">No hay reservas aún.</p>`;
-                return;
-            }
-
-            data.forEach(r => {
-                const div = document.createElement('div');
-                div.className = "bg-white border rounded-2xl p-6 cursor-pointer hover:shadow-md transition";
-                div.innerHTML = `
-                    <div class="flex justify-between">
-                        <div>
-                            <p class="font-semibold">${r.nombre}</p>
-                            <p class="text-sm text-stone-500">${r.email} • ${r.telefono}</p>
-                        </div>
-                        <div class="text-right">
-                            <p>${r.checkin} → ${r.checkout}</p>
-                            <span class="text-xs px-3 py-1 rounded-full ${r.estado === 'Confirmada' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
-                                ${r.estado || 'Pendiente'}
-                            </span>
-                        </div>
-                    </div>
-                `;
-                div.onclick = () => mostrarFicha(r);
-                container.appendChild(div);
-            });
-        }
-
-        function mostrarFicha(r) {
-            document.getElementById('fichaNombre').textContent = r.nombre;
-            document.getElementById('fichaContenido').innerHTML = `
-                <p><strong>Email:</strong> ${r.email}</p>
-                <p><strong>Teléfono:</strong> ${r.telefono}</p>
-                <p><strong>Llegada:</strong> ${r.checkin} | <strong>Salida:</strong> ${r.checkout}</p>
-                <p><strong>Estado:</strong> ${r.estado || 'Pendiente'}</p>
-            `;
-            document.getElementById('fichaModal').classList.remove('hidden');
-        }
-
-        function cerrarFicha() {
-            document.getElementById('fichaModal').classList.add('hidden');
-        }
-
-        // Cargar al abrir
-        window.onload = cargarReservas;
-    </script>
+<body>
+    <nav><h1>Panel Castúo</h1><button onclick="logout()">Salir</button></nav>
+    <table id="clientTable">
+        <thead><tr><th>Nombre</th><th>Hab.</th><th>Acciones</th></tr></thead>
+        <tbody></tbody>
+    </table>
+    <script src="app.js"></script>
 </body>
 </html>
