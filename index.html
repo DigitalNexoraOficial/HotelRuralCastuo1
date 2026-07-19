@@ -3,136 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Rural Castúo - Pinofranqueado</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Hotel Rural Castúo</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-stone-50">
+<body>
+    <nav><h1>Hotel Rural Castúo</h1><button onclick="showSection('admin')">Admin</button></nav>
 
-    <!-- BARRA SUPERIOR -->
-    <div class="bg-white border-b">
-        <div class="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center text-sm">
-            <div class="flex gap-6">
-                <a href="tel:+34927674015" class="hover:text-amber-700">📞 +34 927 674 015</a>
-                <a href="https://wa.me/346XXXXXXXX" target="_blank" class="hover:text-amber-700">💬 WhatsApp</a>
-            </div>
-            <div>Pinofranqueado • Las Hurdes • Cáceres</div>
-        </div>
-    </div>
+    <main id="public">
+        <section><h2>Bienvenidos a Las Hurdes</h2><p>Disfruta del río Los Ángeles.</p></section>
+    </main>
 
-    <!-- NAV -->
-    <nav class="bg-white shadow sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <span class="text-4xl">🌲</span>
-                <h1 class="text-2xl font-bold">Hotel Castúo</h1>
-            </div>
-            <button onclick="openModal()" class="bg-amber-800 text-white px-8 py-3 rounded-2xl font-medium hover:bg-amber-900">
-                Reservar
-            </button>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <section class="min-h-screen bg-cover bg-center flex items-center text-white relative" 
-             style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/2000/1200');">
-        <div class="max-w-4xl mx-auto text-center px-6">
-            <p class="uppercase tracking-widest text-amber-200 text-sm mb-6">Pinofranqueado • Las Hurdes • Cáceres</p>
-            <h1 class="text-6xl md:text-7xl font-light leading-tight">Un refugio entre piedra y río</h1>
-            <p class="mt-8 text-xl max-w-xl mx-auto">Hotel rural con encanto junto a la piscina natural más bella de Las Hurdes.</p>
-            <button onclick="openModal()" class="mt-12 bg-white text-stone-900 px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-amber-100 transition">
-                Reservar estancia
-            </button>
-        </div>
-    </section>
-
-    <!-- MODAL -->
-    <div id="modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-        <div class="bg-white rounded-3xl w-full max-w-lg mx-4 p-8">
-            <div class="flex justify-between mb-6">
-                <h2 class="text-3xl font-bold">Completa tu reserva</h2>
-                <button onclick="closeModal()" class="text-3xl text-gray-400 hover:text-gray-600">×</button>
-            </div>
-
-            <form id="reservaForm" class="space-y-6">
-                <div>
-                    <label class="block text-sm font-medium mb-2">Nombre completo</label>
-                    <input id="nombre" type="text" required class="w-full p-4 border rounded-2xl">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Email</label>
-                        <input id="email" type="email" required class="w-full p-4 border rounded-2xl">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Teléfono</label>
-                        <input id="telefono" type="tel" required class="w-full p-4 border rounded-2xl">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Llegada</label>
-                        <input id="checkin" type="date" required class="w-full p-4 border rounded-2xl">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Salida</label>
-                        <input id="checkout" type="date" required class="w-full p-4 border rounded-2xl">
-                    </div>
-                </div>
-                <button type="submit" class="w-full py-5 bg-amber-800 text-white rounded-2xl font-semibold text-lg">
-                    Enviar solicitud de reserva
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="bg-stone-900 text-white py-16 text-center">
-        <p class="text-2xl font-bold mb-2">Hotel Rural Castúo</p>
-        <p>Paseo Charco Morisco, 4 • 10630 Pinofranqueado, Cáceres</p>
-        <p class="mt-6 text-sm opacity-70">© 2026 • H-CC-00656 • Todos los derechos reservados</p>
-    </footer>
-
-    <script>
-        // Supabase
-        const supabase = supabase.createClient(
-            'https://sushapqkyixbhpjemrbk.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1c2hhcHFreWl4YmhwamVtcmJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNDIyOTEsImV4cCI6MjA5OTcxODI5MX0.OX5mRhPNDEbKNpLVGZ_9R-x2SyVsJ5UISMc_8PLK73c'
-        );
-
-        // Modal functions
-        function openModal() {
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-
-        // Form submit
-        document.getElementById('reservaForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const data = {
-                nombre: document.getElementById('nombre').value,
-                email: document.getElementById('email').value,
-                telefono: document.getElementById('telefono').value,
-                checkin: document.getElementById('checkin').value,
-                checkout: document.getElementById('checkout').value,
-                estado: 'Pendiente'
-            };
-
-            const { error } = await supabase.from('reservas').insert([data]);
-
-            if (error) {
-                alert('Error: ' + error.message);
-            } else {
-                alert('✅ Reserva enviada correctamente.');
-                closeModal();
-                e.target.reset();
-            }
-        });
-    </script>
+    <main id="admin" class="hidden">
+        <h2>Dashboard</h2>
+        <form id="clientForm">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="text" id="habitacion" placeholder="Habitación">
+            <button type="submit">Registrar</button>
+        </form>
+        <table id="clientTable">
+            <thead><tr><th>Nombre</th><th>Hab.</th><th>Acciones</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script src="app.js"></script>
 </body>
 </html>
