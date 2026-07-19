@@ -1,47 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Hotel Castúo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-stone-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md">
-        <div class="text-center mb-8">
-            <span class="text-5xl">🌲</span>
-            <h1 class="text-3xl font-bold mt-4">Panel de Administración</h1>
-            <p class="text-stone-500 mt-2">Hotel Rural Castúo</p>
-        </div>
-
-        <div class="space-y-6">
-            <div>
-                <label class="block text-sm font-medium mb-2">Usuario</label>
-                <input id="usuario" type="text" value="admin" class="w-full p-4 border rounded-2xl">
-            </div>
-            <div>
-                <label class="block text-sm font-medium mb-2">Contraseña</label>
-                <input id="password" type="password" placeholder="Introduce contraseña" class="w-full p-4 border rounded-2xl">
-            </div>
-
-            <button onclick="login()" 
-                    class="w-full py-4 bg-amber-800 text-white rounded-2xl font-semibold text-lg">
-                Entrar al Panel
-            </button>
-        </div>
-
-        <p class="text-center text-xs text-stone-400 mt-8">Solo para propietarios</p>
-    </div>
-
-    <script>
-        function login() {
-            const pass = document.getElementById('password').value;
-            if (pass === "castuo2026") {  // Cambia esta contraseña
-                window.location.href = "admin.html";
-            } else {
-                alert("Contraseña incorrecta");
-            }
-        }
-    </script>
+<body>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button type="submit">Acceder al Panel</button>
+    </form>
+    <script src="app.js"></script>
 </body>
 </html>
