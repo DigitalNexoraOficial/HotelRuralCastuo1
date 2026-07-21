@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Hotel Rural Castúo</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-gold: #c5a059;
+            --bg-luxury: #faf8f5;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: rgba(197, 160, 89, 0.25);
+        }
+
+        body {
+            background-color: var(--bg-luxury);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-navbar {
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .main-navbar .nav-container { display: flex; align-items: center; justify-content: space-between; position: relative; height: 85px; padding: 0 2rem; max-width: 1200px; margin: 0 auto; }
+        .main-navbar .nav-left { flex: 1; display: flex; align-items: center; }
+        .main-navbar .nav-brand { position: absolute; left: 50%; transform: translateX(-50%); }
+        .main-navbar .nav-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
+
+        .admin-container {
+            max-width: 1150px;
+            margin: 9rem auto 4rem auto;
+            padding: 3rem;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-header h2 { margin: 0; font-size: 1.8rem; font-weight: 700; color: var(--primary-color); }
+        .admin-badge { background: rgba(197, 160, 89, 0.15); color: #92400e; padding: 0.4rem 1rem; border-radius: 2rem; font-weight: 700; font-size: 0.8rem; border: 1px solid var(--accent-gold); }
+
+        .search-filter-box {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .search-filter-box input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            font-size: 0.95rem;
+            outline: none;
+            background: #f8fafc;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+        }
+        .search-filter-box input:focus {
+            border-color: var(--accent-gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
+        }
+        .search-filter-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th { background: #f8fafc; color: var(--primary-color); font-weight: 700; padding: 1rem; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+        td { padding: 1rem; border-bottom: 1px solid #e2e8f0; color: var(--text-main); }
+        tr:hover td { background: #fafaf9; }
+
+        .action-btns { display: flex; gap: 0.5rem; align-items: center; }
+        .btn-ficha { background: #e0f2fe; color: #0369a1; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 0.8rem; }
+        .btn-ficha:hover { background: #bae6fd; }
+        .btn-delete { background: #fee2e2; color: #dc2626; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: background 0.2s; font-size: 0.8rem; }
+        .btn-delete:hover { background: #fecaca; }
+
+        /* Estilos del Modal de Ficha y Edición */
+        .client-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .client-modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .client-modal-card {
+            background: white;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            border: 1px solid var(--border-color);
+            position: relative;
+            transform: translateY(15px);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .client-modal-overlay.active .client-modal-card { transform: translateY(0); }
+        .ficha-header { border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .ficha-header h3 { margin: 0; color: var(--primary-color); font-size: 1.3rem; }
+        .ficha-close { background: none; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer; }
+        
+        .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .ficha-item label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.25rem; font-weight: 700; }
+        .ficha-item input { width: 100%; padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; font-size: 0.9rem; font-family: 'Montserrat', sans-serif; background: #f8fafc; outline: none; box-sizing: border-box; }
+        .ficha-item input:focus { border-color: var(--accent-gold); background: #fff; }
+        .ficha-full { grid-column: span 2; }
+
+        .modal-actions-grid { display: flex; gap: 1rem; }
+        .btn-save-ficha { flex: 2; background: var(--primary-color); color: white; border: none; padding: 0.8rem; border-radius: 0.75rem; font-weight: 600; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; transition: background 0.2s; }
+        .btn-save-ficha:hover { background: var(--accent-gold); color: var(--primary-color); }
+        .btn-cancel-ficha { flex: 1; background: #e2e8f0; color: var(--text-main); border: none; padding: 0.8rem; border-radius: 0.75rem; font-weight: 600; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; }
+
+        footer { background: var(--primary-color); color: #94a3b8; text-align: center; padding: 2.5rem 0; margin-top: auto; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="main-navbar" id="mainNavbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" style="color: var(--text-main); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-home"></i> Inicio</a>
+            </div>
+            <div class="nav-brand">
+                <a href="index.html" style="text-decoration:none; display:flex; align-items:center; gap:0.5rem;">
+                    <i class="fas fa-mountain" style="color: var(--accent-gold); font-size: 1.5rem;"></i>
+                    <div style="display:flex; flex-direction:column; line-height:1.1;">
+                        <span style="font-weight:700; letter-spacing:0.15em; color:#0f172a; font-size:1rem;">CASTÚO</span>
+                        <span style="font-size:0.6rem; letter-spacing:0.2em; color:var(--accent-gold); font-weight:600;">PANEL GESTIÓN</span>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="login.html" style="color: #ef4444; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem;"><i class="fas fa-sign-out-alt"></i> Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h2>Gestión de Reservas y Clientes</h2>
+                <p style="color: var(--text-muted); margin: 0.25rem 0 0 0; font-size: 0.9rem;">Hotel Rural Castúo (Pinofranqueado) — Tel: 927 67 40 15</p>
+            </div>
+            <span class="admin-badge"><i class="fas fa-shield-alt"></i> Administrador</span>
+        </div>
+
+        <!-- BARRA DE BÚSQUEDA Y FILTRADO -->
+        <div class="search-filter-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Filtrar por nombre, apellido, email, teléfono, fecha de entrada o salida...">
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titular</th>
+                        <th>Contacto</th>
+                        <th>Fechas de Estancia</th>
+                        <th>Ocupantes</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="adminReservasTableBody">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">Cargando reservas del sistema...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL DE FICHA Y EDICIÓN DEL CLIENTE -->
+    <div class="client-modal-overlay" id="clientFichaModal">
+        <div class="client-modal-card">
+            <div class="ficha-header">
+                <h3><i class="fas fa-edit" style="color: var(--accent-gold);"></i> Ficha y Edición de Huésped</h3>
+                <button class="ficha-close" id="closeFichaModal"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="editClientForm">
+                <input type="hidden" id="editReservaId">
+                <div class="ficha-grid">
+                    <div class="ficha-item">
+                        <label>Nombre</label>
+                        <input type="text" id="editNombre" required>
+                    </div>
+                    <div class="ficha-item">
+                        <label>Apellidos</label>
+                        <input type="text" id="editApellidos">
+                    </div>
+                    <div class="ficha-item ficha-full">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+                    <div class="ficha-item ficha-full">
+                        <label>Teléfono de Contacto</label>
+                        <input type="tel" id="editTelefono" required>
+                    </div>
+                    <div class="ficha-item">
+                        <label>Fecha de Entrada</label>
+                        <input type="date" id="editEntrada" required>
+                    </div>
+                    <div class="ficha-item">
+                        <label>Fecha de Salida</label>
+                        <input type="date" id="editSalida" required>
+                    </div>
+                    <div class="ficha-item">
+                        <label>Adultos</label>
+                        <input type="number" id="editAdultos" min="1" max="10" required>
+                    </div>
+                    <div class="ficha-item">
+                        <label>Menores</label>
+                        <input type="number" id="editMenores" min="0" max="5" required>
+                    </div>
+                </div>
+
+                <div class="modal-actions-grid">
+                    <button type="submit" class="btn-save-ficha">Guardar Cambios</button>
+                    <button type="button" class="btn-cancel-ficha" id="btnCancelarFicha">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Hotel Rural Castúo (Pinofranqueado, Cáceres) — Tel: 927 67 40 15. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        const sb = createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'sb_publishable_TSV_WRbLMBcXIxS9q7bx1Q_ego465L1'
+        );
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tbody = document.getElementById('adminReservasTableBody');
+            const searchInput = document.getElementById('searchInput');
+            let todasLasReservas = [];
+
+            const renderizarTabla = (reservasAMostrar) => {
+                if (!reservasAMostrar || reservasAMostrar.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">No se encontraron registros coincidentes.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = reservasAMostrar.map(r => `
+                    <tr>
+                        <td><strong>${r.nombre} ${r.apellidos || ''}</strong></td>
+                        <td>${r.email}<br><span style="font-size: 0.8rem; color: var(--text-muted);">${r.telefono}</span></td>
+                        <td><i class="far fa-calendar-alt" style="color: var(--accent-gold);"></i> ${r.entrada} al ${r.salida}</td>
+                        <td>${r.adultos} adulto${r.adultos > 1 ? 's' : ''}${r.menores > 0 ? ` · ${r.menores} menor${r.menores > 1 ? 'es' : ''}` : ''}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-ficha" onclick="window.abrirFichaCliente('${r.id}')"><i class="fas fa-edit"></i> Ficha</button>
+                                <button class="btn-delete" onclick="window.eliminarReserva('${r.id}')"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            };
+
+            const cargarReservasAdmin = async () => {
+                const { data: reservas, error } = await sb.from('reservas').select('*').order('entrada', { ascending: true });
+
+                if (error) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #ef4444;">Error al cargar datos: ${error.message}</td></tr>`;
+                    return;
+                }
+
+                todasLasReservas = reservas || [];
+                renderizarTabla(todasLasReservas);
+            };
+
+            searchInput.addEventListener('input', (e) => {
+                const texto = e.target.value.toLowerCase().trim();
+                const filtradas = todasLasReservas.filter(r => {
+                    const nombreCompleto = `${r.nombre || ''} ${r.apellidos || ''}`.toLowerCase();
+                    const email = (r.email || '').toLowerCase();
+                    const telefono = (r.telefono || '').toLowerCase();
+                    const entrada = (r.entrada || '').toLowerCase();
+                    const salida = (r.salida || '').toLowerCase();
+
+                    return nombreCompleto.includes(texto) ||
+                           email.includes(texto) ||
+                           telefono.includes(texto) ||
+                           entrada.includes(texto) ||
+                           salida.includes(texto);
+                });
+                renderizarTabla(filtradas);
+            });
+
+            window.abrirFichaCliente = (id) => {
+                const cliente = todasLasReservas.find(r => r.id == id);
+                if (!cliente) return;
+
+                document.getElementById('editReservaId').value = cliente.id;
+                document.getElementById('editNombre').value = cliente.nombre || '';
+                document.getElementById('editApellidos').value = cliente.apellidos || '';
+                document.getElementById('editEmail').value = cliente.email || '';
+                document.getElementById('editTelefono').value = cliente.telefono || '';
+                document.getElementById('editEntrada').value = cliente.entrada || '';
+                document.getElementById('editSalida').value = cliente.salida || '';
+                document.getElementById('editAdultos').value = cliente.adultos || 1;
+                document.getElementById('editMenores').value = cliente.menores || 0;
+
+                document.getElementById('clientFichaModal').classList.add('active');
+            };
+
+            const cerrarModalFicha = () => {
+                document.getElementById('clientFichaModal').classList.remove('active');
+            };
+
+            document.getElementById('closeFichaModal').addEventListener('click', cerrarModalFicha);
+            document.getElementById('btnCancelarFicha').addEventListener('click', cerrarModalFicha);
+
+            document.getElementById('editClientForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id = document.getElementById('editReservaId').value;
+
+                const datosActualizados = {
+                    nombre: document.getElementById('editNombre').value.trim(),
+                    apellidos: document.getElementById('editApellidos').value.trim(),
+                    email: document.getElementById('editEmail').value.trim(),
+                    telefono: document.getElementById('editTelefono').value.trim(),
+                    entrada: document.getElementById('editEntrada').value,
+                    salida: document.getElementById('editSalida').value,
+                    adultos: parseInt(document.getElementById('editAdultos').value),
+                    menores: parseInt(document.getElementById('editMenores').value)
+                };
+
+                const { error } = await sb.from('reservas').update(datosActualizados).eq('id', id);
+
+                if (error) {
+                    alert('Error al actualizar la ficha: ' + error.message);
+                } else {
+                    alert('¡Ficha actualizada con éxito!');
+                    cerrarModalFicha();
+                    cargarReservasAdmin();
+                }
+            });
+
+            window.eliminarReserva = async (id) => {
+                if (confirm('¿Estás seguro de que deseas eliminar esta reserva del sistema?')) {
+                    const { error } = await sb.from('reservas').delete().eq('id', id);
+                    if (error) {
+                        alert('Error al eliminar: ' + error.message);
+                    } else {
+                        cargarReservasAdmin();
+                    }
+                }
+            };
+
+            cargarReservasAdmin();
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

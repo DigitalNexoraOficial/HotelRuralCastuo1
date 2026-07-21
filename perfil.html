@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil y Reservas - Hotel Rural Castúo</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://github.com/DigitalNexoraOficial/HotelRuralCastuo1/blob/main/Icon-web.png?raw=true">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-gold: #c5a059;
+            --bg-luxury: #faf8f5;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: rgba(197, 160, 89, 0.25);
+        }
+
+        body {
+            background-color: var(--bg-luxury);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-navbar {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .main-navbar .nav-container { display: flex; align-items: center; justify-content: space-between; position: relative; height: 90px; padding: 0 2rem; max-width: 1200px; margin: 0 auto; }
+        .main-navbar .nav-left { flex: 1; display: flex; align-items: center; }
+        .main-navbar .nav-brand { position: absolute; left: 50%; transform: translateX(-50%); }
+        .main-navbar .nav-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
+
+        /* ESTILO PARA EL LOGOTIPO OFICIAL */
+        .brand-logo { text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
+        
+        .logo-img { 
+            height: 48px; 
+            width: 48px; 
+            object-fit: contain; 
+            border-radius: 50%; 
+            background: #ffffff;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        
+        .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .brand-title { font-weight: 700; letter-spacing: 0.2em; color: #ffffff; font-size: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .brand-subtitle { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; font-weight: 600; }
+
+        .home-btn-nav, .logout-btn-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .home-btn-nav:hover { background: var(--accent-gold); color: var(--primary-color); border-color: var(--accent-gold); }
+        .logout-btn-nav { color: #fca5a5; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1); }
+        .logout-btn-nav:hover { background: #ef4444; color: #ffffff; border-color: #ef4444; }
+
+        .perfil-container {
+            max-width: 950px;
+            margin: 9rem auto 4rem auto;
+            padding: 3rem;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tab-nav {
+            display: flex;
+            gap: 2rem;
+            border-bottom: 2px solid #f1f5f9;
+            margin-bottom: 2.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 1rem 0.5rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-muted);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease forwards; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .membership-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.2);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .membership-card::after {
+            content: '\f521';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 9rem;
+            color: rgba(255, 255, 255, 0.02);
+        }
+
+        .membership-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .membership-badge {
+            background: var(--accent-gold);
+            color: #0f172a;
+            padding: 0.35rem 1rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .user-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .detail-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #94a3b8;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-item span {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f8fafc;
+        }
+
+        .reserva-card-luxury {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--accent-gold);
+            border-radius: 1rem;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reserva-info h4 { margin: 0 0 0.5rem 0; font-size: 1.15rem; color: #0f172a; }
+        .reserva-info p { margin: 0.25rem 0; color: var(--text-muted); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; }
+        .reserva-status { background: #e0f2fe; color: #0369a1; padding: 0.4rem 1rem; border-radius: 2rem; font-weight: 600; font-size: 0.8rem; }
+
+        footer { background: var(--primary-color); color: #94a3b8; text-align: center; padding: 2.5rem 0; margin-top: auto; font-size: 0.9rem; }
+    </style>
+</head>
+
+<body>
+    <nav class="main-navbar" id="mainNavbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="home-btn-nav"><i class="fas fa-home"></i> <span>Inicio</span></a>
+            </div>
+            <div class="nav-brand">
+                <a href="index.html" class="brand-logo">
+                    <img src="https://github.com/DigitalNexoraOficial/HotelRuralCastuo1/blob/main/Icon-web.png?raw=true" alt="Hotel Rural Castúo Logo" class="logo-img">
+                    <div class="brand-text">
+                        <span class="brand-title">CASTÚO</span>
+                        <span class="brand-subtitle">HOTEL RURAL</span>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-right">
+                <button id="topLogoutBtn" class="logout-btn-nav" title="Cerrar Sesión">
+                    <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="perfil-container">
+        <div class="tab-nav">
+            <button class="tab-btn active" data-target="perfil-tab"><i class="fas fa-user-circle"></i> Mi Perfil y Membresía</button>
+            <button class="tab-btn" data-target="reservas-tab"><i class="fas fa-calendar-check"></i> Mis Reservas Activas</button>
+        </div>
+
+        <div id="perfil-tab" class="tab-content active">
+            <div style="margin-bottom: 2rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin: 0 0 0.5rem 0;">Bienvenido a tu Espacio Exclusivo</h2>
+                <p style="color: var(--text-muted); margin: 0;">Gestiona tu cuenta y disfruta de las ventajas preferentes de socio en el Hotel Rural Castúo.</p>
+            </div>
+            
+            <div id="userInfo">
+                <div class="membership-card">
+                    <div class="membership-header">
+                        <div>
+                            <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em;">Titular Autenticado</span>
+                            <h3 style="margin: 0.25rem 0 0 0; font-size: 1.3rem;" id="cardUserEmail">Cargando...</h3>
+                        </div>
+                        <span class="membership-badge">Bronce Club</span>
+                    </div>
+                    <div class="user-details-grid">
+                        <div class="detail-item">
+                            <label>Nivel de Socio</label>
+                            <span>Castúo Club Bronce</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Puntos Acumulados</label>
+                            <span style="color: var(--accent-gold);"><i class="fas fa-star"></i> 350 Puntos</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Estatus de Seguridad</label>
+                            <span style="color: #4ade80;"><i class="fas fa-shield-alt"></i> Sesión Protegida</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="reservas-tab" class="tab-content">
+            <div style="margin-bottom: 2rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 700; color: #0f172a; margin: 0 0 0.5rem 0;">Historial de Estancias</h2>
+                <p style="color: var(--text-muted); margin: 0;">Consulta el detalle de tus próximas experiencias y reservas confirmadas.</p>
+            </div>
+
+            <div id="reservasContainer">
+                <p style="color: var(--text-muted); text-align: center; padding: 2rem;">Cargando tus reservas...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Hotel Rural Castuo. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        const sb = createClient(
+            'https://sushapqkyixbhpjemrbk.supabase.co',
+            'sb_publishable_TSV_WRbLMBcXIxS9q7bx1Q_ego465L1'
+        );
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session }, error: sessionError } = await sb.auth.getSession();
+
+            if (sessionError || !session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const userEmail = session.user.email;
+            document.getElementById('cardUserEmail').textContent = userEmail;
+
+            const topLogoutBtn = document.getElementById('topLogoutBtn');
+            if (topLogoutBtn) {
+                topLogoutBtn.addEventListener('click', async () => {
+                    await sb.auth.signOut();
+                    window.location.href = 'login.html';
+                });
+            }
+
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            const switchTab = (targetId) => {
+                tabBtns.forEach(b => b.classList.toggle('active', b.dataset.target === targetId));
+                tabContents.forEach(c => c.classList.toggle('active', c.id === targetId));
+            };
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => switchTab(btn.dataset.target));
+            });
+
+            if (window.location.hash === '#reservas') {
+                switchTab('reservas-tab');
+            }
+
+            const reservasDiv = document.getElementById('reservasContainer');
+            const { data: reservas, error } = await sb.from('reservas').select('*').eq('email', userEmail);
+            
+            if (error) {
+                reservasDiv.innerHTML = `<p style="color: #ef4444; text-align: center;">Error al cargar las reservas: ${error.message}</p>`;
+                return;
+            }
+
+            if (!reservas || reservas.length === 0) {
+                reservasDiv.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; background: #f8fafc; border-radius: 1rem; border: 1px dashed #cbd5e1;">
+                        <i class="far fa-calendar-times" style="font-size: 2.5rem; color: #94a3b8; margin-bottom: 1rem;"></i>
+                        <p style="color: var(--text-muted); font-size: 1.05rem; margin: 0;">No tienes ninguna reserva registrada actualmente con este correo.</p>
+                    </div>
+                `;
+            } else {
+                reservasDiv.innerHTML = reservas.map(r => `
+                    <div class="reserva-card-luxury">
+                        <div class="reserva-info">
+                            <h4><i class="far fa-calendar-alt" style="color: var(--accent-gold);"></i> Estancia del ${r.entrada} al ${r.salida}</h4>
+                            <p><i class="fas fa-users"></i> ${r.adultos} adulto${r.adultos > 1 ? 's' : ''}${r.menores > 0 ? ` · ${r.menores} menor${r.menores > 1 ? 'es' : ''}` : ''}</p>
+                            <p><i class="fas fa-user"></i> Titular: ${r.nombre} ${r.apellidos || ''} (${r.telefono})</p>
+                        </div>
+                        <div>
+                            <span class="reserva-status"><i class="fas fa-check-circle"></i> Confirmada</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>

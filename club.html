@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Castúo Club - Hotel Rural Castúo</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://github.com/DigitalNexoraOficial/HotelRuralCastuo1/blob/main/Icon-web.png?raw=true">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-gold: #c5a059;
+            --accent-gold-light: #dfc286;
+            --bg-luxury: #faf8f5;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: rgba(197, 160, 89, 0.25);
+        }
+
+        body {
+            background-color: var(--bg-luxury);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* BARRA DE NAVEGACIÓN IDÉNTICA A LA PRINCIPAL */
+        .main-navbar {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .main-navbar .nav-container { display: flex; align-items: center; justify-content: space-between; position: relative; height: 90px; padding: 0 2rem; max-width: 1200px; margin: 0 auto; }
+        .main-navbar .nav-left { flex: 1; display: flex; align-items: center; }
+        .main-navbar .nav-brand { position: absolute; left: 50%; transform: translateX(-50%); }
+        .main-navbar .nav-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
+
+        /* ESTILO PARA EL LOGOTIPO OFICIAL */
+        .brand-logo { text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
+        
+        .logo-img { 
+            height: 48px; 
+            width: 48px; 
+            object-fit: contain; 
+            border-radius: 50%; 
+            background: #ffffff;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        
+        .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+        .brand-title { font-weight: 700; letter-spacing: 0.2em; color: #ffffff; font-size: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .brand-subtitle { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; font-weight: 600; }
+
+        .nav-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            transition: all 0.3s;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+        }
+        .nav-item:hover { 
+            background: var(--accent-gold); 
+            color: var(--primary-color); 
+            border-color: var(--accent-gold);
+        }
+
+        .club-hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.85)), 
+                        url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 11rem 1.5rem 6rem 1.5rem;
+            margin-top: 90px;
+        }
+
+        .club-hero h1 { font-size: 3rem; font-weight: 700; margin: 0 0 1rem 0; letter-spacing: 0.05em; text-transform: uppercase; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .club-hero p { font-size: 1.15rem; max-width: 700px; margin: 0 auto 2rem auto; color: #e2e8f0; font-weight: 300; }
+
+        .hero-cta-btn {
+            background: var(--accent-gold);
+            color: var(--primary-color);
+            padding: 0.9rem 2.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .hero-cta-btn:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .club-content {
+            max-width: 1150px;
+            margin: 5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem auto;
+        }
+        .section-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-gold);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* GRID DE TARJETAS (BENEFICIOS) */
+        .club-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .club-card {
+            background: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 1.25rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+            border: 1px solid #edf2f7;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .club-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent-gold);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        .club-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(197, 160, 89, 0.18);
+            border-color: rgba(197, 160, 89, 0.4);
+        }
+        .club-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .club-card i.main-icon {
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            background: rgba(197, 160, 89, 0.1);
+            width: 75px;
+            height: 75px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .club-card:hover i.main-icon {
+            transform: scale(1.1);
+        }
+
+        .club-card h3 { color: var(--primary-color); font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 700; }
+        .club-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin: 0; flex: 1; }
+
+        /* SECCIÓN DE NIVELES (GAMIFICACIÓN) */
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .tier-card {
+            background: white;
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .tier-card.featured {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.3);
+        }
+        .tier-badge {
+            background: rgba(197, 160, 89, 0.15);
+            color: var(--accent-gold);
+            padding: 0.35rem 1rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            align-self: flex-start;
+            margin-bottom: 1.25rem;
+        }
+        .tier-card.featured .tier-badge {
+            background: var(--accent-gold);
+            color: #0f172a;
+        }
+        .tier-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .tier-req { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
+        .tier-card.featured .tier-req { color: #94a3b8; }
+        
+        .tier-features { list-style: none; padding: 0; margin: 0 0 2rem 0; flex: 1; }
+        .tier-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.85rem;
+            color: var(--text-main);
+        }
+        .tier-card.featured .tier-features li { color: #e2e8f0; }
+        .tier-features li i { color: var(--accent-gold); }
+
+        .tier-btn {
+            display: block;
+            text-align: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .tier-btn:hover { background: var(--accent-gold); color: var(--primary-color); }
+        .tier-card.featured .tier-btn { background: var(--accent-gold); color: var(--primary-color); }
+        .tier-card.featured .tier-btn:hover { background: white; }
+
+        /* TESTIMONIOS */
+        .testimonios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+        .testimonio-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1.25rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+            border: 1px solid #edf2f7;
+            position: relative;
+        }
+        .testimonio-stars { color: var(--accent-gold); margin-bottom: 1rem; font-size: 0.9rem; }
+        .testimonio-text { color: var(--text-muted); font-style: italic; line-height: 1.7; font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .testimonio-author { font-weight: 700; color: var(--primary-color); font-size: 0.95rem; }
+        .testimonio-origin { font-size: 0.8rem; color: var(--text-muted); }
+
+        footer { background: var(--primary-color); color: #94a3b8; text-align: center; padding: 3rem 0; margin-top: auto; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="main-navbar" id="mainNavbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Inicio</a>
+            </div>
+            <div class="nav-brand">
+                <a href="index.html" class="brand-logo">
+                    <img src="https://github.com/DigitalNexoraOficial/HotelRuralCastuo1/blob/main/Icon-web.png?raw=true" alt="Hotel Rural Castúo Logo" class="logo-img">
+                    <div class="brand-text">
+                        <span class="brand-title">CASTÚO</span>
+                        <span class="brand-subtitle">HOTEL RURAL</span>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="login.html" class="nav-item"><i class="fas fa-user"></i> Acceder</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="club-hero">
+        <h1>Castúo Club Exclusivo</h1>
+        <p>Forme parte de nuestra distinguida comunidad y disfrute de privilegios únicos diseñados para hacer de cada estancia un recuerdo imborrable.</p>
+        <a href="login.html" class="hero-cta-btn"><i class="fas fa-user-plus"></i> Unirme al Club Gratis</a>
+    </header>
+
+    <div class="club-content">
+        <!-- SECCIÓN 1: VENTAJAS PRINCIPALES -->
+        <div class="section-header">
+            <span class="section-tag">Ventajas del Socio</span>
+            <h2 class="section-title">Privilegios por pertenecer al Club</h2>
+            <p class="section-desc">Cada visita acumula experiencias y atenciones preferentes orientadas al máximo bienestar.</p>
+        </div>
+
+        <div class="club-grid">
+            <div class="club-card">
+                <i class="fas fa-percent main-icon"></i>
+                <h3>Tarifas Preferentes</h3>
+                <p>Acceso garantizado a los mejores precios directos y descuentos exclusivos no disponibles en plataformas externas.</p>
+            </div>
+            <div class="club-card">
+                <i class="fas fa-clock main-icon"></i>
+                <h3>Late Check-out VIP</h3>
+                <p>Disfrute de su habitación por más tiempo sujeto a disponibilidad[cite: 3], permitiendo una salida sin prisas ni agobios.</p>
+            </div>
+            <div class="club-card">
+                <i class="fas fa-wine-bottle main-icon"></i>
+                <h3>Detalle de Bienvenida</h3>
+                <p>Una botella de vino de la tierra y productos artesanales extremeños esperándole a su llegada en la habitación[cite: 3].</p>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: NIVELES DE SOCIO (GAMIFICACIÓN) -->
+        <div style="margin-top: 7rem;">
+            <div class="section-header">
+                <span class="section-tag">Progresión y Recompensas</span>
+                <h2 class="section-title">Niveles de Membresía</h2>
+                <p class="section-desc">Cuantas más experiencias compartas con nosotros, mayores serán las atenciones exclusivas en tu cuenta.</p>
+            </div>
+
+            <div class="tiers-grid">
+                <!-- Nivel Bronce -->
+                <div class="tier-card">
+                    <span class="tier-badge">Nivel Inicial</span>
+                    <h3 class="tier-title">Bronce Club</h3>
+                    <p class="tier-req">Acceso automático al registrarte</p>
+                    <ul class="tier-features">
+                        <li><i class="fas fa-check-circle"></i> 5% de descuento en todas tus reservas</li>
+                        <li><i class="fas fa-check-circle"></i> Detalle de bienvenida en la habitación[cite: 3]</li>
+                        <li><i class="fas fa-check-circle"></i> Late check-out (sujeto a disponibilidad)[cite: 3]</li>
+                        <li><i class="fas fa-check-circle"></i> 350 Puntos de regalo iniciales</li>
+                    </ul>
+                    <a href="login.html" class="tier-btn">Comenzar Gratis</a>
+                </div>
+
+                <!-- Nivel Plata -->
+                <div class="tier-card featured">
+                    <span class="tier-badge">Más Popular</span>
+                    <h3 class="tier-title">Plata Club</h3>
+                    <p class="tier-req">A partir de 3 estancias o 6 noches</p>
+                    <ul class="tier-features">
+                        <li><i class="fas fa-check-circle"></i> 10% de descuento directo en estancias</li>
+                        <li><i class="fas fa-check-circle"></i> Ascenso de categoría de habitación gratuito*</li>
+                        <li><i class="fas fa-check-circle"></i> Desayuno continental incluido un día</li>
+                        <li><i class="fas fa-check-circle"></i> Acumulación x2 de puntos Castúo Coins</li>
+                    </ul>
+                    <a href="login.html" class="tier-btn">Alcanzar Plata</a>
+                </div>
+
+                <!-- Nivel Oro -->
+                <div class="tier-card">
+                    <span class="tier-badge">Máxima Exclusividad</span>
+                    <h3 class="tier-title">Oro Club</h3>
+                    <p class="tier-req">A partir de 5 estancias o 12 noches</p>
+                    <ul class="tier-features">
+                        <li><i class="fas fa-check-circle"></i> 15% de descuento permanente</li>
+                        <li><i class="fas fa-check-circle"></i> Atención telefónica prioritaria 24/7</li>
+                        <li><i class="fas fa-check-circle"></i> Experiencia gastronómica o cata de cortesía</li>
+                        <li><i class="fas fa-check-circle"></i> Check-in VIP adelantado sin esperas</li>
+                    </ul>
+                    <a href="login.html" class="tier-btn">Descubrir Oro</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: EXPERIENCIAS EN EL ENTORNO -->
+        <div style="margin-top: 7rem;">
+            <div class="section-header">
+                <span class="section-tag">Entorno Natural</span>
+                <h2 class="section-title">Actividades y Experiencias</h2>
+                <p class="section-desc">Disfrute de Las Hurdes con ventajas únicas reservadas exclusivamente para los miembros de nuestra comunidad.</p>
+            </div>
+
+            <div class="club-grid">
+                <div class="club-card">
+                    <i class="fas fa-hiking main-icon"></i>
+                    <h3>Rutas Guiadas Privadas</h3>
+                    <p>Acceso a recomendaciones de senderismo especializadas y mapas detallados de los parajes más mágicos de Pinofranqueado.</p>
+                </div>
+                <div class="club-card">
+                    <i class="fas fa-star main-icon"></i>
+                    <h3>Castúo Coins</h3>
+                    <p>Acumule puntos por cada euro gastado en estancias y canjéalos directamente por noches de hotel o servicios adicionales.</p>
+                </div>
+                <div class="club-card">
+                    <i class="fas fa-gift main-icon"></i>
+                    <h3>Eventos Estacionales</h3>
+                    <p>Invitaciones preferentes a fines de semana temáticos, catas de aceites extremeños y degustaciones gastronómicas locales.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: TESTIMONIOS DE SOCIOS -->
+        <div style="margin-top: 7rem;">
+            <div class="section-header">
+                <span class="section-tag">Comunidad</span>
+                <h2 class="section-title">Lo que dicen nuestros socios</h2>
+                <p class="section-desc">Experiencias reales de viajeros que ya disfrutan de las ventajas de pertenecer al club.</p>
+            </div>
+
+            <div class="testimonios-grid">
+                <div class="testimonio-card">
+                    <div class="testimonio-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonio-text">"Pertenecer al Castúo Club hace que cada escapada sea especial. Los detalles de bienvenida y el late check-out sin prisas marcan la diferencia."</p>
+                    <div class="testimonio-author">Sofía R.</div>
+                    <div class="testimonio-origin">Socio Plata</div>
+                </div>
+
+                <div class="testimonio-card">
+                    <div class="testimonio-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonio-text">"El descuento directo en las reservas y la acumulación de puntos hacen que repetir merezca la pena. Un trato exquisito."</p>
+                    <div class="testimonio-author">Javier G.</div>
+                    <div class="testimonio-origin">Socio Bronce</div>
+                </div>
+
+                <div class="testimonio-card">
+                    <div class="testimonio-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonio-text">"Inscribirme fue instantáneo. En mi última estancia disfruté del detalle artesanal en la habitación y una atención inmejorable."</p>
+                    <div class="testimonio-author">Carmen L.</div>
+                    <div class="testimonio-origin">Socio Oro</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Hotel Rural Castuo. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
