@@ -31,9 +31,9 @@
             overflow-x: hidden;
         }
 
-        /* BARRA DE NAVEGACIÓN */
+        /* BARRA DE NAVEGACIÓN LIMPIA */
         .main-navbar {
-            background: transparent;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0) 100%);
             border-bottom: none;
             position: fixed;
             top: 0;
@@ -43,15 +43,15 @@
             transition: all 0.4s ease;
         }
         .main-navbar.scrolled {
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(197, 160, 89, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .main-navbar .nav-container { display: flex; align-items: center; justify-content: space-between; position: relative; max-width: 1200px; margin: 0 auto; height: 90px; padding: 0 2rem; }
-        .main-navbar .nav-left { flex: 1; display: flex; justify-content: flex-start; }
-        .main-navbar .nav-brand { position: absolute; left: 50%; transform: translateX(-50%); }
-        .main-navbar .nav-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 1rem; }
+        .main-navbar .nav-container { display: flex; align-items: center; justify-content: space-between; position: relative; max-width: 1200px; margin: 0 auto; height: 95px; padding: 0 2rem; }
+        .main-navbar .nav-left { display: flex; align-items: center; z-index: 2; }
+        .main-navbar .nav-brand { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; z-index: 1; }
+        .main-navbar .nav-right { display: flex; align-items: center; gap: 1rem; z-index: 2; }
 
         .brand-logo { text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
         
@@ -66,12 +66,12 @@
         }
         
         .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
-        .brand-title { font-weight: 700; letter-spacing: 0.2em; color: #ffffff; font-size: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .brand-title { font-weight: 700; letter-spacing: 0.2em; color: #ffffff; font-size: 1.1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .brand-subtitle { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--accent-gold); text-transform: uppercase; font-weight: 600; }
 
         .menu-toggle-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: white;
             width: 44px;
             height: 44px;
@@ -82,6 +82,7 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 1.1rem;
+            backdrop-filter: blur(4px);
         }
         .menu-toggle-btn:hover {
             background: var(--accent-gold);
@@ -102,9 +103,10 @@
             transition: all 0.3s;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(4px);
+            white-space: nowrap;
         }
         .nav-item:hover { 
             background: var(--accent-gold); 
@@ -121,20 +123,21 @@
 
         header {
             position: relative;
-            background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.7)), 
+            background: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.75)), 
                         url('https://github.com/DigitalNexoraOficial/HotelRuralCastuo1/blob/main/fondo-hero.png?raw=true') center/cover no-repeat;
-            min-height: 90vh;
+            min-height: 95vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 90px;
+            padding-top: 130px;
+            padding-bottom: 4rem;
             overflow: visible;
         }
         .hero-content {
             text-align: center;
             padding: 0 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
         .hero-content h1 {
             font-size: 3.5rem;
@@ -143,14 +146,15 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             margin-bottom: 1rem;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
         .hero-content p {
             font-size: 1.2rem;
-            color: #e2e8f0;
+            color: #f1f5f9;
             font-weight: 300;
             letter-spacing: 0.05em;
             margin: 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
         }
 
         /* BARRA DE RESERVA INTEGRADA */
@@ -164,7 +168,7 @@
             box-sizing: border-box;
         }
         .search-bar {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(20px);
             padding: 1.2rem 1.5rem;
             border-radius: 2rem;
@@ -288,13 +292,9 @@
         .cal-day:hover:not(.disabled) { background: rgba(197, 160, 89, 0.15); color: var(--accent-gold); }
         .cal-day.disabled { color: #cbd5e1; cursor: not-allowed; }
         
-        /* Estilos mejorados para entrada y salida */
         .cal-day.checkin { background: var(--primary-color) !important; color: white !important; font-weight: 700; border-top-left-radius: 50%; border-bottom-left-radius: 50%; border-top-right-radius: 0; border-bottom-right-radius: 0; }
         .cal-day.checkout { background: var(--primary-color) !important; color: white !important; font-weight: 700; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-top-left-radius: 0; border-bottom-left-radius: 0; }
-        
-        /* Si se selecciona un solo día o es el mismo */
         .cal-day.checkin.single-date { border-radius: 50% !important; }
-
         .cal-day.in-range { background: rgba(197, 160, 89, 0.2); border-radius: 0; color: var(--primary-color); font-weight: 600; }
 
         .apply-btn {
@@ -314,7 +314,65 @@
         }
         .apply-btn:hover { background: var(--accent-gold); color: var(--primary-color); }
 
-        /* SECCIÓN DE TARJETAS (HABITACIONES Y ZONAS COMUNES) */
+        /* VENTANA MODAL PARA RESERVA DIRECTA Y LOGIN */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-sizing: border-box;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1.25rem; right: 1.25rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close:hover { background: var(--accent-gold); color: white; border-color: var(--accent-gold); }
+
+        .form-group { margin-bottom: 1.25rem; text-align: left; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary-color); margin-bottom: 0.4rem; }
+        .form-group input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15); }
+
+        /* SECCIÓN DE TARJETAS */
         .section-title {
             text-align: center;
             font-size: 2.2rem;
@@ -472,6 +530,12 @@
         .drawer-links a:hover { background: rgba(197, 160, 89, 0.1); color: var(--accent-gold); }
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+
+        @media (max-width: 768px) {
+            .brand-subtitle { display: none; }
+            .brand-title { font-size: 0.95rem; letter-spacing: 0.15em; }
+            .main-navbar .nav-container { padding: 0 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -532,7 +596,6 @@
                             <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span>
                         </div>
                         <div class="calendar-days-grid" id="calendarDaysGrid"></div>
-                        <button type="button" class="apply-btn" id="applyDatesBtn">Aplicar Fechas</button>
                     </div>
                 </div>
 
@@ -586,6 +649,42 @@
             </div>
         </div>
     </header>
+
+    <!-- VENTANA MODAL PARA REGISTRO Y TOMA DE DATOS DE RESERVA -->
+    <div class="modal-overlay" id="reservationModal">
+        <div class="modal-box">
+            <button type="button" class="modal-close" id="closeModalBtn"><i class="fas fa-times"></i></button>
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent-gold); font-weight: 700;">Confirmación de Estancia</span>
+                <h3 style="color: var(--primary-color); font-size: 1.5rem; margin: 0.5rem 0 0 0;">Datos del Huésped</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;" id="modalResumenEstancia">Fechas y ocupantes seleccionados</p>
+            </div>
+
+            <form id="directReservationForm">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="resNombre" required placeholder="Ej. Juan">
+                </div>
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <input type="text" id="resApellidos" required placeholder="Ej. García Pérez">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico (Tu usuario)</label>
+                    <input type="email" id="resEmail" required placeholder="correo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono de Contacto</label>
+                    <input type="tel" id="resTelefono" required placeholder="600000000">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña para tu cuenta</label>
+                    <input type="password" id="resPassword" required placeholder="Mínimo 6 caracteres">
+                </div>
+                <button type="submit" class="apply-btn" id="submitReservaBtn" style="padding: 1rem; font-size: 0.9rem; margin-top: 1rem;">Confirmar y Registrar Reserva</button>
+            </form>
+        </div>
+    </div>
 
     <!-- SECCIÓN INTRODUCTORIA -->
     <section style="max-width: 950px; margin: 5rem auto 2rem auto; padding: 0 1.5rem; text-align: center;">
@@ -770,7 +869,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT COMPLETO DE LÓGICA (CALENDARIO, HUÉSPEDES Y SUPABASE) -->
+    <!-- SCRIPT DE LÓGICA -->
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
@@ -780,19 +879,16 @@
         );
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // 1. Control de acceso al panel de administración en menú lateral
             try {
                 const { data: { session } } = await sb.auth.getSession();
                 const adminLink = document.getElementById('adminDrawerLink');
                 if (session && session.user && adminLink) {
-                    // Si deseas restringir el panel de administración a un correo específico, actívalo aquí:
-                    // if (session.user.email === 'tu-correo@admin.com') { adminLink.style.display = 'flex'; }
+                    // adminLink.style.display = 'flex';
                 }
             } catch (e) {
-                console.log('Error verificando sesión:', e);
+                console.log('Error sesión:', e);
             }
 
-            // 2. Navbar efecto scroll
             const navbar = document.getElementById('mainNavbar');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 40) {
@@ -802,7 +898,6 @@
                 }
             });
 
-            // 3. Menú Lateral Drawer
             const menuToggle = document.getElementById('menuToggle');
             const sideDrawer = document.getElementById('sideDrawer');
             const drawerOverlay = document.getElementById('drawerOverlay');
@@ -822,7 +917,6 @@
                 drawerOverlay.addEventListener('click', cerrarMenu);
             }
 
-            // 4. Lógica de los Paneles Flotantes (Calendario y Ocupantes)
             const dateField = document.getElementById('dateField');
             const datePickerPanel = document.getElementById('datePickerPanel');
             const closeDatePanel = document.getElementById('closeDatePanel');
@@ -831,11 +925,10 @@
             const whoPickerPanel = document.getElementById('whoPickerPanel');
             const closeWhoPanel = document.getElementById('closeWhoPanel');
 
-            // Abrir/Cerrar panel de fechas
             if (dateField && datePickerPanel) {
                 dateField.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    whoPickerPanel.classList.remove('active'); // Cerrar el otro
+                    if(whoPickerPanel) whoPickerPanel.classList.remove('active');
                     datePickerPanel.classList.toggle('active');
                 });
             }
@@ -846,11 +939,10 @@
                 });
             }
 
-            // Abrir/Cerrar panel de ocupantes
             if (whoField && whoPickerPanel) {
                 whoField.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    datePickerPanel.classList.remove('active'); // Cerrar el otro
+                    if(datePickerPanel) datePickerPanel.classList.remove('active');
                     whoPickerPanel.classList.toggle('active');
                 });
             }
@@ -861,7 +953,6 @@
                 });
             }
 
-            // Cerrar paneles al hacer clic fuera
             document.addEventListener('click', (e) => {
                 if (datePickerPanel && !datePickerPanel.contains(e.target) && !dateField.contains(e.target)) {
                     datePickerPanel.classList.remove('active');
@@ -871,7 +962,6 @@
                 }
             });
 
-            // 5. Control de Contador de Huéspedes
             let adults = 2;
             let children = 0;
             const adultCountSpan = document.getElementById('adultCount');
@@ -883,9 +973,7 @@
                 if (childCountSpan) childCountSpan.textContent = children;
                 if (whoInputDisplay) {
                     let text = `${adults} adulto${adults > 1 ? 's' : ''}`;
-                    if (children > 0) {
-                        text += ` · ${children} menor${children > 1 ? 'es' : ''}`;
-                    }
+                    if (children > 0) text += ` · ${children} menor${children > 1 ? 'es' : ''}`;
                     whoInputDisplay.value = text;
                 }
             };
@@ -896,39 +984,17 @@
             const btnPlusChild = document.getElementById('plusChild');
             const applyWhoBtn = document.getElementById('applyWhoBtn');
 
-            if (btnMinusAdult) {
-                btnMinusAdult.addEventListener('click', () => {
-                    if (adults > 1) { adults--; updateWhoDisplay(); }
-                });
-            }
-            if (btnPlusAdult) {
-                btnPlusAdult.addEventListener('click', () => {
-                    adults++; updateWhoDisplay();
-                });
-            }
-            if (btnMinusChild) {
-                btnMinusChild.addEventListener('click', () => {
-                    if (children > 0) { children--; updateWhoDisplay(); }
-                });
-            }
-            if (btnPlusChild) {
-                btnPlusChild.addEventListener('click', () => {
-                    children++; updateWhoDisplay();
-                });
-            }
-            if (applyWhoBtn && whoPickerPanel) {
-                applyWhoBtn.addEventListener('click', () => {
-                    whoPickerPanel.classList.remove('active');
-                });
-            }
+            if (btnMinusAdult) btnMinusAdult.addEventListener('click', () => { if (adults > 1) { adults--; updateWhoDisplay(); } });
+            if (btnPlusAdult) btnPlusAdult.addEventListener('click', () => { adults++; updateWhoDisplay(); });
+            if (btnMinusChild) btnMinusChild.addEventListener('click', () => { if (children > 0) { children--; updateWhoDisplay(); } });
+            if (btnPlusChild) btnPlusChild.addEventListener('click', () => { children++; updateWhoDisplay(); });
+            if (applyWhoBtn && whoPickerPanel) applyWhoBtn.addEventListener('click', () => whoPickerPanel.classList.remove('active'));
 
-            // 6. Generación del Calendario Interactivo
             const calendarDaysGrid = document.getElementById('calendarDaysGrid');
             const monthYearTitle = document.getElementById('monthYearTitle');
             const prevMonthBtn = document.getElementById('prevMonth');
             const nextMonthBtn = document.getElementById('nextMonth');
             const dateInputDisplay = document.getElementById('dateInputDisplay');
-            const applyDatesBtn = document.getElementById('applyDatesBtn');
 
             let currentMonth = new Date().getMonth();
             let currentYear = new Date().getFullYear();
@@ -942,16 +1008,13 @@
                 calendarDaysGrid.innerHTML = '';
                 if (monthYearTitle) monthYearTitle.textContent = `${monthsNames[month]} ${year}`;
 
-                const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7; // Lunes como primer día
+                const firstDayIndex = (new Date(year, month, 1).getDay() + 6) % 7;
                 const totalDays = new Date(year, month + 1, 0).getDate();
 
-                // Días vacíos iniciales
                 for (let i = 0; i < firstDayIndex; i++) {
-                    const emptyDiv = document.createElement('div');
-                    calendarDaysGrid.appendChild(emptyDiv);
+                    calendarDaysGrid.appendChild(document.createElement('div'));
                 }
 
-                // Días del mes
                 for (let day = 1; day <= totalDays; day++) {
                     const dayDiv = document.createElement('div');
                     dayDiv.classList.add('cal-day');
@@ -964,23 +1027,37 @@
                     if (thisDate < today) {
                         dayDiv.classList.add('disabled');
                     } else {
-                        dayDiv.addEventListener('click', () => {
+                        dayDiv.addEventListener('click', (e) => {
+                            e.stopPropagation();
+
                             if (!checkInDate || (checkInDate && checkOutDate)) {
                                 checkInDate = thisDate;
                                 checkOutDate = null;
                             } else if (checkInDate && !checkOutDate) {
                                 if (thisDate > checkInDate) {
                                     checkOutDate = thisDate;
+                                    setTimeout(() => {
+                                        if(datePickerPanel) datePickerPanel.classList.remove('active');
+                                    }, 200);
                                 } else {
                                     checkInDate = thisDate;
+                                    checkOutDate = null;
                                 }
                             }
+
+                            const opt = { day: 'numeric', month: 'short' };
+                            if (checkInDate && checkOutDate) {
+                                dateInputDisplay.value = `${checkInDate.toLocaleDateString('es-ES', opt)} — ${checkOutDate.toLocaleDateString('es-ES', opt)}`;
+                            } else if (checkInDate) {
+                                dateInputDisplay.value = `${checkInDate.toLocaleDateString('es-ES', opt)} — Salida...`;
+                            }
+
                             renderCalendar(currentMonth, currentYear);
                         });
 
-                        // Marcar estados visuales
                         if (checkInDate && thisDate.getTime() === checkInDate.getTime()) {
                             dayDiv.classList.add('checkin');
+                            if(!checkOutDate) dayDiv.classList.add('single-date');
                         }
                         if (checkOutDate && thisDate.getTime() === checkOutDate.getTime()) {
                             dayDiv.classList.add('checkout');
@@ -994,12 +1071,14 @@
             };
 
             if (prevMonthBtn && nextMonthBtn) {
-                prevMonthBtn.addEventListener('click', () => {
+                prevMonthBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     currentMonth--;
                     if (currentMonth < 0) { currentMonth = 11; currentYear--; }
                     renderCalendar(currentMonth, currentYear);
                 });
-                nextMonthBtn.addEventListener('click', () => {
+                nextMonthBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     currentMonth++;
                     if (currentMonth > 11) { currentMonth = 0; currentYear++; }
                     renderCalendar(currentMonth, currentYear);
@@ -1008,23 +1087,96 @@
 
             renderCalendar(currentMonth, currentYear);
 
-            if (applyDatesBtn && dateInputDisplay && datePickerPanel) {
-                applyDatesBtn.addEventListener('click', () => {
-                    if (checkInDate && checkOutDate) {
-                        const opt = { day: 'numeric', month: 'short' };
-                        dateInputDisplay.value = `${checkInDate.toLocaleDateString('es-ES', opt)} — ${checkOutDate.toLocaleDateString('es-ES', opt)}`;
-                        datePickerPanel.classList.remove('active');
-                    } else {
-                        alert('Por favor selecciona una fecha de entrada y otra de salida.');
+            const searchSubmitBtn = document.getElementById('searchSubmitBtn');
+            const reservationModal = document.getElementById('reservationModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const modalResumenEstancia = document.getElementById('modalResumenEstancia');
+            const directReservationForm = document.getElementById('directReservationForm');
+
+            if (searchSubmitBtn && reservationModal) {
+                searchSubmitBtn.addEventListener('click', () => {
+                    if (!checkInDate || !checkOutDate) {
+                        alert('Por favor selecciona las fechas de entrada y salida en el calendario antes de reservar.');
+                        return;
                     }
+                    modalResumenEstancia.textContent = `${dateInputDisplay.value} | ${whoInputDisplay.value}`;
+                    reservationModal.classList.add('active');
                 });
             }
 
-            // 7. Botón Reservar / Acción de búsqueda
-            const searchSubmitBtn = document.getElementById('searchSubmitBtn');
-            if (searchSubmitBtn) {
-                searchSubmitBtn.addEventListener('click', () => {
-                    window.location.href = 'login.html';
+            const cerrarModal = () => {
+                if (reservationModal) reservationModal.classList.remove('active');
+            };
+
+            if (closeModalBtn) closeModalBtn.addEventListener('click', cerrarModal);
+            if (reservationModal) {
+                reservationModal.addEventListener('click', (e) => {
+                    if (e.target === reservationModal) cerrarModal();
+                });
+            }
+
+            if (directReservationForm) {
+                directReservationForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const nombre = document.getElementById('resNombre').value.trim();
+                    const apellidos = document.getElementById('resApellidos').value.trim();
+                    const email = document.getElementById('resEmail').value.trim();
+                    const telefono = document.getElementById('resTelefono').value.trim();
+                    const password = document.getElementById('resPassword').value;
+                    
+                    const entradaStr = checkInDate.toISOString().split('T')[0];
+                    const salidaStr = checkOutDate.toISOString().split('T')[0];
+
+                    const submitBtn = document.getElementById('submitReservaBtn');
+                    submitBtn.textContent = 'Procesando reserva...';
+                    submitBtn.disabled = true;
+
+                    try {
+                        let { data: authData, error: authError } = await sb.auth.signUp({
+                            email: email,
+                            password: password,
+                            options: {
+                                data: { nombre: nombre, apellidos: apellidos, telefono: telefono }
+                            }
+                        });
+
+                        if (authError && (authError.message.includes('already registered') || authError.status === 400)) {
+                            const loginRes = await sb.auth.signInWithPassword({ email: email, password: password });
+                            if (loginRes.error) {
+                                throw new Error('El correo ya está registrado pero la contraseña no coincide.');
+                            }
+                        } else if (authError) {
+                            throw authError;
+                        }
+
+                        const { error: reservaError } = await sb.from('reservas').insert([
+                            {
+                                nombre: nombre,
+                                apellidos: apellidos,
+                                email: email,
+                                telefono: telefono,
+                                entrada: entradaStr,
+                                salida: salidaStr,
+                                adultos: adults,
+                                menores: children
+                            }
+                        ]);
+
+                        if (reservaError) throw reservaError;
+
+                        localStorage.setItem('clienteEmail', email);
+
+                        alert('¡Reserva realizada con éxito!');
+                        directReservationForm.reset();
+                        reservationModal.classList.remove('active');
+                        window.location.href = 'perfil.html';
+
+                    } catch (err) {
+                        alert('Hubo un error al procesar la solicitud: ' + err.message);
+                        submitBtn.textContent = 'Confirmar y Registrar Reserva';
+                        submitBtn.disabled = false;
+                    }
                 });
             }
 
