@@ -283,11 +283,19 @@
             cursor: pointer;
             transition: all 0.2s;
             color: var(--text-main);
+            position: relative;
         }
         .cal-day:hover:not(.disabled) { background: rgba(197, 160, 89, 0.15); color: var(--accent-gold); }
         .cal-day.disabled { color: #cbd5e1; cursor: not-allowed; }
-        .cal-day.checkin, .cal-day.checkout { background: var(--primary-color) !important; color: white !important; font-weight: 700; }
-        .cal-day.in-range { background: rgba(197, 160, 89, 0.2); border-radius: 0; color: var(--primary-color); }
+        
+        /* Estilos mejorados para entrada y salida */
+        .cal-day.checkin { background: var(--primary-color) !important; color: white !important; font-weight: 700; border-top-left-radius: 50%; border-bottom-left-radius: 50%; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+        .cal-day.checkout { background: var(--primary-color) !important; color: white !important; font-weight: 700; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+        
+        /* Si se selecciona un solo día o es el mismo */
+        .cal-day.checkin.single-date { border-radius: 50% !important; }
+
+        .cal-day.in-range { background: rgba(197, 160, 89, 0.2); border-radius: 0; color: var(--primary-color); font-weight: 600; }
 
         .apply-btn {
             width: 100%;
